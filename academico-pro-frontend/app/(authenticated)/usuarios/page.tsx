@@ -1,6 +1,5 @@
 import {
   faBan,
-  faKey,
   faPen,
   faPlus,
   faSearch,
@@ -16,6 +15,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
 
 export type UserDataTable = {
   id: number;
@@ -185,13 +185,13 @@ export default function Users() {
                 <TableCell className="px-6 py-4">
                   <div className="flex space-x-2">
                     <button className="p-1 hover:bg-neutral-100 rounded">
+                      <FontAwesomeIcon icon={faEye} width={20} />
+                    </button>
+                    <button className="p-1 hover:bg-neutral-100 rounded">
                       <FontAwesomeIcon icon={faPen} width={20} />
                     </button>
                     <button className="p-1 hover:bg-neutral-100 rounded">
                       <FontAwesomeIcon icon={faBan} width={20} />
-                    </button>
-                    <button className="p-1 hover:bg-neutral-100 rounded">
-                      <FontAwesomeIcon icon={faKey} width={20} />
                     </button>
                   </div>
                 </TableCell>
