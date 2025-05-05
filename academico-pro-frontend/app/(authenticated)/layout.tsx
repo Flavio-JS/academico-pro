@@ -48,7 +48,7 @@ export default function AuthenticatedLayout({
         </div>
       </nav>
 
-      <div className="flex h-[900px] pt-[72px]">
+      <div className="flex pt-[72px]">
         <aside
           id="sidebar"
           className="w-64 border-r border-neutral-200 bg-white p-4 fixed h-full"
@@ -82,7 +82,6 @@ export default function AuthenticatedLayout({
         </aside>
 
         <main
-          id="dashboard"
           className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-auto"
         >
           {children}
