@@ -7,6 +7,17 @@ const nextConfig: NextConfig = {
         ? process.env.API_URL
         : "http://localhost:30080",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+    disableStaticImages: true,
+  },
 };
 
 export default nextConfig;
