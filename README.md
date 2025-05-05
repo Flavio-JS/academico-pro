@@ -37,7 +37,7 @@ academico-pro/
 ### 1️⃣ Clonar o repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/academico-pro.git
+git clone https://github.com/Flavio-JS/academico-pro.git
 cd academico-pro
 ```
 
