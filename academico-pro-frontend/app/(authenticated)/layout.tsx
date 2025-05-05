@@ -1,14 +1,8 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faHouse,
-  faBook,
-  faStar,
-  faFileLines,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { Nav } from "@/components/Layout/Nav/Nav";
 
 export default function AuthenticatedLayout({
   children,
@@ -53,37 +47,10 @@ export default function AuthenticatedLayout({
           id="sidebar"
           className="w-64 border-r border-neutral-200 bg-white p-4 fixed h-full"
         >
-          <nav className="space-y-2">
-            <span className="flex items-center gap-3 p-3 bg-neutral-100 rounded-lg text-neutral-900 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faHouse} />
-              <span>Dashboard</span>
-            </span>
-            <span className="flex items-center gap-3 p-3 hover:bg-neutral-50 rounded-lg text-neutral-600 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faBook} />
-              <span>Disciplinas</span>
-            </span>
-            <span className="flex items-center gap-3 p-3 hover:bg-neutral-50 rounded-lg text-neutral-600 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faStar} />
-              <span>Notas</span>
-            </span>
-            <span className="flex items-center gap-3 p-3 hover:bg-neutral-50 rounded-lg text-neutral-600 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faFileLines} />
-              <span>Boletim</span>
-            </span>
-            <span className="flex items-center gap-3 p-3 hover:bg-neutral-50 rounded-lg text-neutral-600 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faBell} />
-              <span>Notificações</span>
-            </span>
-            <span className="flex items-center gap-3 p-3 hover:bg-neutral-50 rounded-lg text-neutral-600 cursor-pointer">
-              <FontAwesomeIcon width={20} icon={faUser} />
-              <span>Perfil</span>
-            </span>
-          </nav>
+          <Nav />
         </aside>
 
-        <main
-          className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-auto"
-        >
+        <main className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-auto">
           {children}
         </main>
       </div>
