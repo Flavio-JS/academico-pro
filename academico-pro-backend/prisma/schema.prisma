@@ -1,0 +1,203 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  PROFESSOR
+  STUDENT
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  CANCELED
+  COMPLETED
+}
+
+enum NotificationStatus {
+  SENT
+  FAILED
+  DRAFT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  cpf       String   @unique
+  role      Role
+  avatarUrl String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  studentProfile        StudentProfile?
+  teacherProfile        TeacherProfile?
+  sentNotifications     Notification[]          @relation("SenderNotifications")
+  receivedNotifications NotificationRecipient[] @relation("NotificationRecipients")
+  grades                Grade[]
+  taughtDisciplines     Discipline[]            @relation("TeacherDisciplines")
+
+  @@index([email, cpf])
+}
+
+model StudentProfile {
+  id         String @id @default(uuid())
+  userId     String @unique
+  user       User   @relation(fields: [userId], references: [id])
+  enrollment String @unique
+  courseId   String
+  course     Course @relation(fields: [courseId], references: [id])
+  period     Int
+
+  enrollments Enrollment[]
+  bulletins   Bulletin[]
+  Grade       Grade[]
+
+  @@index([enrollment, courseId])
+}
+
+model TeacherProfile {
+  id          String       @id @default(uuid())
+  userId      String       @unique
+  user        User         @relation(fields: [userId], references: [id])
+  department  String
+  disciplines Discipline[]
+
+  @@index([userId, department])
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  name        String
+  code        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+
+  students    StudentProfile[]
+  disciplines Discipline[]
+
+  @@index([name, code])
+}
+
+model Discipline {
+  id          String  @id @default(uuid())
+  code        String  @unique
+  name        String
+  workload    Int     @map("cargaHoraria")
+  department  String
+  syllabus    String? @map("ementa")
+  courseId    String?
+  course      Course? @relation(fields: [courseId], references: [id])
+  professorId String?
+  professor   User?   @relation(fields: [professorId], references: [id], name: "TeacherDisciplines")
+
+  enrollments      Enrollment[]
+  grades           Grade[]
+  TeacherProfile   TeacherProfile? @relation(fields: [teacherProfileId], references: [id])
+  teacherProfileId String?
+
+  @@index([code, name, department])
+}
+
+model Semester {
+  id        String   @id @default(uuid())
+  name      String   @unique // Ex: "2025.1"
+  startDate DateTime
+  endDate   DateTime
+
+  enrollments Enrollment[]
+  grades      Grade[]
+  bulletins   Bulletin[]
+
+  @@index([name])
+}
+
+model Enrollment {
+  id           String           @id @default(uuid())
+  studentId    String
+  student      StudentProfile   @relation(fields: [studentId], references: [id])
+  disciplineId String
+  discipline   Discipline       @relation(fields: [disciplineId], references: [id])
+  semesterId   String
+  semester     Semester         @relation(fields: [semesterId], references: [id])
+  status       EnrollmentStatus @default(ACTIVE)
+  createdAt    DateTime         @default(now())
+
+  grades     Grade[]
+  bulletin   Bulletin? @relation(fields: [bulletinId], references: [id])
+  bulletinId String?
+
+  @@unique([studentId, disciplineId, semesterId])
+  @@index([studentId, disciplineId, status])
+}
+
+model Grade {
+  id             String         @id @default(uuid())
+  studentId      String
+  student        StudentProfile @relation(fields: [studentId], references: [id])
+  disciplineId   String
+  discipline     Discipline     @relation(fields: [disciplineId], references: [id])
+  professorId    String
+  professor      User           @relation(fields: [professorId], references: [id])
+  enrollmentId   String?
+  enrollment     Enrollment?    @relation(fields: [enrollmentId], references: [id])
+  assessmentType String // Ex: "prova 1", "trabalho prático"
+  value          Float
+  semesterId     String
+  semester       Semester       @relation(fields: [semesterId], references: [id])
+  createdAt      DateTime       @default(now())
+
+  @@index([studentId, disciplineId, semesterId])
+}
+
+model Bulletin {
+  id         String         @id @default(uuid())
+  studentId  String
+  student    StudentProfile @relation(fields: [studentId], references: [id])
+  semesterId String
+  semester   Semester       @relation(fields: [semesterId], references: [id])
+  createdAt  DateTime       @default(now())
+
+  enrollments Enrollment[]
+
+  @@unique([studentId, semesterId])
+}
+
+model Notification {
+  id        String             @id @default(uuid())
+  subject   String
+  message   String
+  senderId  String
+  sender    User               @relation(fields: [senderId], references: [id], name: "SenderNotifications")
+  status    NotificationStatus @default(SENT)
+  createdAt DateTime           @default(now())
+
+  recipients NotificationRecipient[]
+}
+
+model NotificationRecipient {
+  id             String       @id @default(uuid())
+  notificationId String
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  recipientId    String
+  recipient      User         @relation(fields: [recipientId], references: [id], name: "NotificationRecipients")
+  read           Boolean      @default(false)
+  readAt         DateTime?
+
+  @@unique([notificationId, recipientId])
+}
