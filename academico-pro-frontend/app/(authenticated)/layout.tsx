@@ -50,7 +50,7 @@ export default function AuthenticatedLayout({
           <Nav />
         </aside>
 
-        <main className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-auto">
+        <main className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-hidden">
           {children}
         </main>
       </div>

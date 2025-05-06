@@ -24,7 +24,7 @@ export type UserDataTable = {
   cpf: string;
   type: string;
   status: string;
-  avatarUrl: string;
+  avatarSeed: string;
 };
 
 const users: UserDataTable[] = [
@@ -35,7 +35,7 @@ const users: UserDataTable[] = [
     cpf: "123.456.789-00",
     type: "Aluno(a)",
     status: "Ativo",
-    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123",
+    avatarSeed: "654",
   },
   {
     id: 2,
@@ -44,7 +44,7 @@ const users: UserDataTable[] = [
     cpf: "987.654.321-00",
     type: "Professor(a)",
     status: "Ativo",
-    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=456",
+    avatarSeed: "321",
   },
   {
     id: 3,
@@ -53,7 +53,7 @@ const users: UserDataTable[] = [
     cpf: "456.123.789-00",
     type: "Administrador",
     status: "Ativo",
-    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123",
+    avatarSeed: "123",
   },
   {
     id: 4,
@@ -62,7 +62,7 @@ const users: UserDataTable[] = [
     cpf: "321.654.987-00",
     type: "Aluno(a)",
     status: "Inativo",
-    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=456",
+    avatarSeed: "789",
   },
   {
     id: 5,
@@ -71,7 +71,7 @@ const users: UserDataTable[] = [
     cpf: "654.321.987-00",
     type: "Professor(a)",
     status: "Ativo",
-    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123",
+    avatarSeed: "987",
   },
 ];
 
@@ -156,7 +156,7 @@ export default function Users() {
               <TableRow key={user.id} className="hover:bg-neutral-50">
                 <TableCell className="px-6 py-4">
                   <Image
-                    src={user.avatarUrl}
+                    src={`https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=${user.avatarSeed}`}
                     width={32}
                     height={32}
                     className="w-8 h-8 rounded-full"
@@ -184,13 +184,13 @@ export default function Users() {
                 </TableCell>
                 <TableCell className="px-6 py-4">
                   <div className="flex space-x-2">
-                    <button className="p-1 hover:bg-neutral-100 rounded">
+                    <button className="text-neutral-600 hover:text-neutral-900">
                       <FontAwesomeIcon icon={faEye} width={20} />
                     </button>
-                    <button className="p-1 hover:bg-neutral-100 rounded">
+                    <button className="text-neutral-600 hover:text-neutral-900">
                       <FontAwesomeIcon icon={faPen} width={20} />
                     </button>
-                    <button className="p-1 hover:bg-neutral-100 rounded">
+                    <button className="text-neutral-600 hover:text-neutral-900">
                       <FontAwesomeIcon icon={faBan} width={20} />
                     </button>
                   </div>

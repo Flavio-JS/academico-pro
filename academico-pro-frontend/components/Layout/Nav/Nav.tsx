@@ -58,6 +58,18 @@ export const Nav = () => {
         <span>Disciplinas</span>
       </Link>
       <Link
+        href="/matriculas"
+        className={cn(
+          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
+          {
+            "bg-neutral-100 text-neutral-900": pathname.includes("/matriculas"),
+          }
+        )}
+      >
+        <FontAwesomeIcon width={20} icon={faFileLines} />
+        <span>Matriculas</span>
+      </Link>
+      <Link
         href="/notas"
         className={cn(
           "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
