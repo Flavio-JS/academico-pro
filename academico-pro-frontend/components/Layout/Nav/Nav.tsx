@@ -104,7 +104,7 @@ export const Nav = () => {
         )}
       >
         <FontAwesomeIcon width={20} icon={faBell} />
-        <span>Notifica es</span>
+        <span>Notificações</span>
       </Link>
       <Link
         href="/perfil"
