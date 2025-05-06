@@ -1,4 +1,4 @@
-import { faPlus, faTimes, faToggleOn } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faToggleOn } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Table,
@@ -10,6 +10,26 @@ import {
 } from "@/components/ui/table";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faEye, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 export type Discipline = {
   id: number;
@@ -77,84 +97,203 @@ const disciplines: Discipline[] = [
 
 export default function Disciplines() {
   return (
-    <>
-      <header className="w-full bg-white border-b border-neutral-200 px-6 py-4">
+    <div className="flex flex-col h-full">
+      {/* Cabeçalho */}
+      <header className="w-full px-6 py-4">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl text-neutral-900">Disciplinas Cadastradas</h1>
-          <button className="bg-neutral-900 text-white px-4 py-2 rounded-lg flex items-center gap-2">
-            <FontAwesomeIcon icon={faPlus} width={20} />
-            Nova Disciplina
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="gap-2">
+                <FontAwesomeIcon icon={faPlus} width={16} />
+                Nova Disciplina
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>Nova Disciplina</DialogTitle>
+                <DialogClose className="absolute right-4 top-4" />
+              </DialogHeader>
+
+              <form className="space-y-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Dados Básicos</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Nome da Disciplina</Label>
+                      <Input type="text" />
+                    </div>
+                    <div>
+                      <Label>Código Único</Label>
+                      <Input type="text" />
+                    </div>
+                    <div>
+                      <Label>Carga Horária</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="30h">30h</SelectItem>
+                          <SelectItem value="60h">60h</SelectItem>
+                          <SelectItem value="90h">90h</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Departamento</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="math">Matemática</SelectItem>
+                          <SelectItem value="comp">Computação</SelectItem>
+                          <SelectItem value="eng">Engenharia</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Vinculações</h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <Label>Professor Responsável</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione um professor" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="prof1">Dr. João Silva</SelectItem>
+                          <SelectItem value="prof2">
+                            Profa. Ana Santos
+                          </SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Pré-requisitos</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Selecione os pré-requisitos" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mat101">MAT-101</SelectItem>
+                          <SelectItem value="mat102">MAT-102</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium">Detalhes</h3>
+                  <div>
+                    <Label>Ementa</Label>
+                    <textarea className="w-full min-h-32 p-2 border rounded-md" />
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Label>Status</Label>
+                    <Switch />
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-4">
+                  <Button variant="outline" type="button">
+                    Cancelar
+                  </Button>
+                  <Button type="submit">Salvar</Button>
+                </div>
+              </form>
+            </DialogContent>
+          </Dialog>
         </div>
       </header>
 
-      <main id="disciplines-admin" className="p-6 bg-neutral-50">
-        <section className="bg-white rounded-lg p-6 mb-6 shadow-sm">
-          <div className="flex flex-wrap gap-4">
-            <div className="flex-1">
+      {/* Conteúdo principal */}
+      <main className="flex-1 p-6 bg-neutral-50">
+        {/* Filtros */}
+        <Card className="mb-6">
+          <CardContent className="p-6">
+            <div className="flex flex-col gap-4">
               <div className="relative">
                 <FontAwesomeIcon
                   icon={faSearch}
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500"
                 />
-                <input
+                <Input
                   type="search"
                   placeholder="Buscar por nome, código ou professor"
-                  className="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-lg"
+                  className="pl-10 w-full"
                 />
               </div>
-            </div>
-            <div className="flex gap-4">
-              <select className="px-4 py-2 border border-neutral-300 rounded-lg">
-                <option>Status</option>
-                <option>Ativas</option>
-                <option>Inativas</option>
-              </select>
-              <select className="px-4 py-2 border border-neutral-300 rounded-lg">
-                <option>Departamento</option>
-                <option>Matemática</option>
-                <option>Computação</option>
-                <option>Engenharia</option>
-              </select>
-              <select className="px-4 py-2 border border-neutral-300 rounded-lg">
-                <option>2025.1</option>
-                <option>2024.2</option>
-                <option>2024.1</option>
-              </select>
-            </div>
-          </div>
-        </section>
 
-        <section className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="flex flex-wrap gap-4">
+                <Select>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    <SelectItem value="active">Ativas</SelectItem>
+                    <SelectItem value="inactive">Inativas</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Departamento" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    <SelectItem value="math">Matemática</SelectItem>
+                    <SelectItem value="comp">Computação</SelectItem>
+                    <SelectItem value="eng">Engenharia</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Semestre" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2025.1">2025.1</SelectItem>
+                    <SelectItem value="2024.2">2024.2</SelectItem>
+                    <SelectItem value="2024.1">2024.1</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tabela de disciplinas */}
+        <Card>
           <Table>
-            <TableHeader className="bg-neutral-100">
+            <TableHeader className="bg-neutral-50">
               <TableRow>
-                <TableHead className="px-6 py-4 text-left">Código</TableHead>
-                <TableHead className="px-6 py-4 text-left">Nome</TableHead>
-                <TableHead className="px-6 py-4 text-left">
-                  Carga Horária
-                </TableHead>
-                <TableHead className="px-6 py-4 text-left">Professor</TableHead>
-                <TableHead className="px-6 py-4 text-left">Alunos</TableHead>
-                <TableHead className="px-6 py-4 text-left">Status</TableHead>
-                <TableHead className="px-6 py-4 text-left">Ações</TableHead>
+                <TableHead className="w-[120px]">Código</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead>Carga Horária</TableHead>
+                <TableHead>Professor</TableHead>
+                <TableHead>Alunos</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead className="text-right">Ações</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-neutral-200">
+            <TableBody>
               {disciplines.map((discipline) => (
                 <TableRow key={discipline.id} className="hover:bg-neutral-50">
-                  <TableCell className="px-6 py-4">{discipline.code}</TableCell>
-                  <TableCell className="px-6 py-4">{discipline.name}</TableCell>
-                  <TableCell className="px-6 py-4">
-                    {discipline.hours}
+                  <TableCell className="font-medium">
+                    {discipline.code}
                   </TableCell>
-                  <TableCell className="px-6 py-4">
-                    {discipline.professor}
-                  </TableCell>
-                  <TableCell className="px-6 py-4">
-                    {discipline.students}
-                  </TableCell>
-                  <TableCell className="px-6 py-4">
+                  <TableCell>{discipline.name}</TableCell>
+                  <TableCell>{discipline.hours}</TableCell>
+                  <TableCell>{discipline.professor}</TableCell>
+                  <TableCell>{discipline.students}</TableCell>
+                  <TableCell>
                     <span
                       className={`px-2 py-1 rounded-full text-sm ${
                         discipline.status === "Ativa"
@@ -165,123 +304,23 @@ export default function Disciplines() {
                       {discipline.status}
                     </span>
                   </TableCell>
-                  <TableCell className="px-6 py-4">
-                    <div className="flex gap-3">
-                      <button className="text-neutral-600 hover:text-neutral-900">
-                        <FontAwesomeIcon icon={faPenToSquare} width={20} />
-                      </button>
-                      <button className="text-neutral-600 hover:text-neutral-900">
-                        <FontAwesomeIcon icon={faEye} width={20} />
-                      </button>
-                      <button className="text-neutral-600 hover:text-neutral-900">
-                        <FontAwesomeIcon icon={faToggleOn} width={20} />
-                      </button>
-                    </div>
+                  <TableCell className="flex justify-end gap-2">
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faEye} width={16} />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faPenToSquare} width={16} />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faToggleOn} width={16} />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </section>
-
-        {/* modal de criar disciplina */}
-        <section
-          id="discipline-form"
-          className="fixed inset-0 bg-neutral-900/50 flex items-center justify-center hidden"
-        >
-          <div className="bg-white rounded-lg p-6 w-[800px] max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl">Nova Disciplina</h2>
-              <button>
-                <FontAwesomeIcon icon={faTimes} width={20} />
-              </button>
-            </div>
-
-            <form className="space-y-6">
-              <div className="space-y-4">
-                <h3 className="text-lg">Dados Básicos</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block mb-2">Nome da Disciplina</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2">Código Único</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <label className="block mb-2">Carga Horária</label>
-                    <select className="w-full px-4 py-2 border border-neutral-300 rounded-lg">
-                      <option>30h</option>
-                      <option>60h</option>
-                      <option>90h</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block mb-2">Departamento</label>
-                    <select className="w-full px-4 py-2 border border-neutral-300 rounded-lg">
-                      <option>Matemática</option>
-                      <option>Computação</option>
-                      <option>Engenharia</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg">Vinculações</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block mb-2">Professor Responsável</label>
-                    <select className="w-full px-4 py-2 border border-neutral-300 rounded-lg">
-                      <option>Selecione um professor</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block mb-2">Pré-requisitos</label>
-                    <select
-                      multiple
-                      className="w-full px-4 py-2 border border-neutral-300 rounded-lg"
-                    >
-                      <option>MAT-101</option>
-                      <option>MAT-102</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <h3 className="text-lg">Detalhes</h3>
-                <div>
-                  <label className="block mb-2">Ementa</label>
-                  <textarea className="w-full px-4 py-2 border border-neutral-300 rounded-lg h-32"></textarea>
-                </div>
-                <div className="flex items-center gap-2">
-                  <label>Status</label>
-                  <button className="w-12 h-6 bg-neutral-300 rounded-full relative">
-                    <div className="w-5 h-5 bg-white rounded-full absolute left-0.5 top-0.5"></div>
-                  </button>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-4">
-                <button className="px-4 py-2 border border-neutral-300 rounded-lg">
-                  Cancelar
-                </button>
-                <button className="px-4 py-2 bg-neutral-900 text-white rounded-lg">
-                  Salvar
-                </button>
-              </div>
-            </form>
-          </div>
-        </section>
+        </Card>
       </main>
-    </>
+    </div>
   );
 }

@@ -11,6 +11,14 @@ import {
   TableHead,
   TableCell,
 } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export type Enrollment = {
   id: number;
@@ -102,50 +110,69 @@ const enrollments: Enrollment[] = [
 export default function Enrollment() {
   return (
     <div className="flex h-[calc(100vh-65px)]">
-      <main className="flex-1 bg-neutral-50 p-6">
+      <main className="flex-1 bg-neutral-50 p-6 overflow-auto">
         <div className="max-w-7xl mx-auto">
+          {/* Cabeçalho */}
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl text-neutral-900">
               Gerenciamento de Matrículas
             </h2>
-            <button className="bg-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 flex items-center gap-2">
+            <Button className="gap-2">
               <FontAwesomeIcon icon={faPlus} width={16} />
               <span>Nova Matrícula</span>
-            </button>
+            </Button>
           </div>
 
+          {/* Filtros e Tabela */}
           <div className="bg-white rounded-lg shadow p-6">
+            {/* Filtros */}
             <div className="grid grid-cols-3 gap-4 mb-6">
               <div>
                 <label className="block text-sm text-neutral-600 mb-2">
                   Semestre
                 </label>
-                <select className="w-full border border-neutral-300 rounded-lg p-2">
-                  <option>2025.1</option>
-                  <option>2024.2</option>
-                </select>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="2025.1" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2025.1">2025.1</SelectItem>
+                    <SelectItem value="2024.2">2024.2</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <label className="block text-sm text-neutral-600 mb-2">
                   Curso
                 </label>
-                <select className="w-full border border-neutral-300 rounded-lg p-2">
-                  <option>Todos os cursos</option>
-                  <option>Informática</option>
-                </select>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Todos os cursos" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos os cursos</SelectItem>
+                    <SelectItem value="computing">Informática</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <label className="block text-sm text-neutral-600 mb-2">
                   Status
                 </label>
-                <select className="w-full border border-neutral-300 rounded-lg p-2">
-                  <option>Todos</option>
-                  <option>Ativo</option>
-                  <option>Trancado</option>
-                </select>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Todos" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos</SelectItem>
+                    <SelectItem value="active">Ativo</SelectItem>
+                    <SelectItem value="locked">Trancado</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
+            {/* Tabela */}
             <Table>
               <TableHeader>
                 <TableRow className="border-b border-neutral-200">
@@ -205,12 +232,12 @@ export default function Enrollment() {
                     </TableCell>
                     <TableCell className="py-4 px-4 text-right">
                       <div className="flex justify-end gap-3">
-                        <button className="text-neutral-600 hover:text-neutral-900">
-                          <FontAwesomeIcon icon={faLink} width={20} />
-                        </button>
-                        <button className="text-neutral-600 hover:text-neutral-900">
-                          <FontAwesomeIcon icon={faBan} width={20} />
-                        </button>
+                        <Button variant="ghost" size="icon">
+                          <FontAwesomeIcon icon={faLink} width={16} />
+                        </Button>
+                        <Button variant="ghost" size="icon">
+                          <FontAwesomeIcon icon={faBan} width={16} />
+                        </Button>
                       </div>
                     </TableCell>
                   </TableRow>

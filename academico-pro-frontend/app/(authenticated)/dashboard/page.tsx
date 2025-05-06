@@ -1,95 +1,230 @@
 import { faBell, faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+
+const enrolledCourses = [
+  {
+    id: 1,
+    name: "Cálculo I",
+    code: "MAT101",
+    professor: "Prof. João Silva",
+    schedule: "Seg/Qua 08:00-10:00",
+    status: "Cursando",
+  },
+  {
+    id: 2,
+    name: "Física I",
+    code: "FIS101",
+    professor: "Profa. Maria Santos",
+    schedule: "Ter/Qui 10:00-12:00",
+    status: "Concluído",
+  },
+  {
+    id: 3,
+    name: "Álgebra Linear",
+    code: "MAT201",
+    professor: "Prof. Carlos Mendes",
+    schedule: "Seg/Sex 14:00-16:00",
+    status: "Cursando",
+  },
+  {
+    id: 4,
+    name: "Química Geral",
+    code: "QUI101",
+    professor: "Profa. Ana Lima",
+    schedule: "Ter/Qui 08:00-10:00",
+    status: "Trancado",
+  },
+  {
+    id: 5,
+    name: "Programação I",
+    code: "INF101",
+    professor: "Prof. Rafael Costa",
+    schedule: "Qua/Sex 10:00-12:00",
+    status: "Cursando",
+  },
+];
+
+const recentGrades = [
+  {
+    course: "Álgebra Linear",
+    grade: 9.2,
+    average: 8.7,
+  },
+  {
+    course: "Química Geral",
+    grade: 6.8,
+    average: 7.1,
+  },
+  {
+    course: "Programação I",
+    grade: 8.9,
+    average: 8.5,
+  },
+];
+
+const notifications = [
+  {
+    id: 1,
+    type: "activity",
+    message: "Lista de exercícios 2 disponível em Álgebra Linear",
+    date: "05/05/2025 10:15",
+    icon: faBell,
+  },
+  {
+    id: 2,
+    type: "grade",
+    message: "Nota de Química Geral foi publicada",
+    date: "04/05/2025 19:45",
+    icon: faStar,
+  },
+  {
+    id: 3,
+    type: "activity",
+    message: "Nova aula gravada em Programação I",
+    date: "03/05/2025 09:30",
+    icon: faBell,
+  },
+  {
+    id: 4,
+    type: "grade",
+    message: "Nota final lançada em Álgebra Linear",
+    date: "02/05/2025 16:00",
+    icon: faStar,
+  },
+];
 
 export default function Dashboard() {
   return (
-    <>
-      <section id="enrolled-courses" className="mb-8">
-        <h2 className="text-xl mb-4 text-neutral-700">
+    <div className="space-y-8">
+      {/* Seção de Disciplinas Matriculadas */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-neutral-700">
           Minhas Disciplinas Matriculadas
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="bg-white p-4 rounded-lg border border-neutral-200 text-neutral-700">
-            <h3 className="font-bold">Cálculo I</h3>
-            <p className="text-sm text-neutral-600">Código: MAT101</p>
-            <p className="text-sm text-neutral-600">Prof. João Silva</p>
-            <p className="text-sm text-neutral-600">Seg/Qua 08:00-10:00</p>
-            <span className="inline-block mt-2 px-3 py-1 bg-neutral-100 text-neutral-800 rounded-full text-sm">
-              Cursando
-            </span>
-          </div>
-          <div className="bg-white p-4 rounded-lg border border-neutral-200 text-neutral-700">
-            <h3 className="font-bold">Física I</h3>
-            <p className="text-sm text-neutral-600">Código: FIS101</p>
-            <p className="text-sm text-neutral-600">Profa. Maria Santos</p>
-            <p className="text-sm text-neutral-600">Ter/Qui 10:00-12:00</p>
-            <span className="inline-block mt-2 px-3 py-1 bg-neutral-100 text-neutral-800 rounded-full text-sm">
-              Cursando
-            </span>
-          </div>
+          {enrolledCourses.map((course) => (
+            <Card key={course.id}>
+              <CardHeader>
+                <CardTitle className="text-lg">{course.name}</CardTitle>
+                <CardDescription className="space-y-1">
+                  <p>Código: {course.code}</p>
+                  <p>{course.professor}</p>
+                  <p>{course.schedule}</p>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <span
+                  className={cn(
+                    "text-sm px-3 py-1 rounded-full",
+                    course.status === "Cursando" && "bg-blue-100 text-blue-800",
+                    course.status === "Concluído" &&
+                      "bg-green-100 text-green-800",
+                    course.status === "Trancado" &&
+                      "bg-yellow-100 text-yellow-800"
+                  )}
+                >
+                  {course.status}
+                </span>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 
-      <section id="recent-grades" className="mb-8">
-        <h2 className="text-xl mb-4 text-neutral-700">Notas Recentes</h2>
+      {/* Seção de Notas Recentes */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-neutral-700">
+          Notas Recentes
+        </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded-lg border border-neutral-200">
-            <div className="space-y-4">
-              <div className="flex justify-between items-center pb-2 border-b border-neutral-100">
-                <div>
-                  <h4 className="text-neutral-700">Cálculo I</h4>
-                  <p className="text-sm text-neutral-600">Nota: 8.5</p>
+          <Card>
+            <CardContent className="p-6 space-y-4">
+              {recentGrades.map((grade, index) => (
+                <div
+                  key={index}
+                  className="pb-4 border-b border-neutral-100 last:border-0 last:pb-0"
+                >
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h4 className="text-neutral-800 font-medium">
+                        {grade.course}
+                      </h4>
+                      <p className="text-sm text-neutral-600">
+                        Nota: {grade.grade}
+                        {grade.grade > grade.average ? (
+                          <span className="ml-2 text-green-600">▲</span>
+                        ) : (
+                          <span className="ml-2 text-red-600">▼</span>
+                        )}
+                      </p>
+                    </div>
+                    <span className="text-sm bg-neutral-100 px-3 py-1 rounded-full text-neutral-700">
+                      Média: {grade.average}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-sm bg-neutral-100 px-3 py-1 rounded-full text-neutral-700">
-                  Média: 8.2
-                </span>
+              ))}
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-0 h-[200px] flex items-center justify-center">
+              <div className="text-center p-6">
+                <p className="text-neutral-600">
+                  Gráfico de Evolução das Notas
+                </p>
               </div>
-              <div className="flex justify-between items-center pb-2 border-b border-neutral-100">
-                <div>
-                  <h4 className="text-neutral-700">Física I</h4>
-                  <p className="text-sm text-neutral-600">Nota: 7.8</p>
-                </div>
-                <span className="text-sm bg-neutral-100 px-3 py-1 rounded-full text-neutral-700">
-                  Média: 7.5
-                </span>
-              </div>
-            </div>
-          </div>
-          <div className="bg-white p-4 rounded-lg border border-neutral-200">
-            <div className="h-[200px] bg-neutral-100 rounded flex items-center justify-center">
-              <span className="text-neutral-600">
-                Gráfico de Evolução das Notas
-              </span>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      <section id="notifications">
-        <h2 className="text-xl mb-4 text-neutral-700">Notificações Recentes</h2>
-        <div className="bg-white rounded-lg border border-neutral-200">
-          <div className="p-4 border-b border-neutral-100">
-            <div className="flex items-center gap-3">
-              <FontAwesomeIcon icon={faBell} width={20} className="text-neutral-600" />
-              <div>
-                <p className="text-neutral-900">
-                  Nova atividade postada em Cálculo I
-                </p>
-                <p className="text-sm text-neutral-600">04/05/2025 15:10</p>
+      {/* Seção de Notificações */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-neutral-700">
+          Notificações Recentes
+        </h2>
+        <Card>
+          <ScrollArea className="h-[200px]">
+            {notifications.map((notification) => (
+              <div
+                key={notification.id}
+                className="p-4 border-b border-neutral-100 last:border-0"
+              >
+                <div className="flex items-start gap-3">
+                  <FontAwesomeIcon
+                    icon={notification.icon}
+                    className={cn(
+                      "mt-1",
+                      notification.type === "grade"
+                        ? "text-yellow-500"
+                        : "text-blue-500"
+                    )}
+                    width={18}
+                  />
+                  <div>
+                    <p className="text-neutral-900 font-medium">
+                      {notification.message}
+                    </p>
+                    <p className="text-sm text-neutral-600">
+                      {notification.date}
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="p-4 border-b border-neutral-100">
-            <div className="flex items-center gap-3">
-              <FontAwesomeIcon icon={faStar} width={20} className="text-neutral-600" />
-              <div>
-                <p className="text-neutral-900">Nota lançada em Física I</p>
-                <p className="text-sm text-neutral-600">04/05/2025 14:30</p>
-              </div>
-            </div>
-          </div>
-        </div>
+            ))}
+          </ScrollArea>
+        </Card>
       </section>
-    </>
+    </div>
   );
 }

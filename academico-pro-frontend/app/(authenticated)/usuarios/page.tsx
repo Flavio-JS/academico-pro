@@ -16,6 +16,9 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 export type UserDataTable = {
   id: number;
@@ -77,7 +80,7 @@ const users: UserDataTable[] = [
 
 export default function Users() {
   return (
-    <div id="content" className="flex-1 p-6 bg-neutral-50 overflow-auto">
+    <div className="flex-1 p-6 bg-neutral-50 overflow-auto">
       <div id="page-header" className="flex justify-between items-center mb-6">
         <h2 className="text-2xl text-neutral-900">Gestão de Usuários</h2>
         <button className="bg-neutral-900 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
@@ -86,72 +89,47 @@ export default function Users() {
         </button>
       </div>
 
-      <div id="filters" className="bg-white p-4 rounded-lg shadow-sm mb-6">
-        <div className="flex items-center space-x-4 mb-4">
-          <div className="flex-1 relative">
-            <FontAwesomeIcon
-              icon={faSearch}
-              width={20}
-              height={20}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
-            />
-            <input
-              type="text"
-              placeholder="Buscar por nome, email ou CPF"
-              className="w-full pl-10 pr-4 py-2 border border-neutral-200 rounded-lg"
-            />
-          </div>
-        </div>
-        <div className="flex space-x-2">
-          <button className="px-4 py-2 rounded-lg bg-neutral-900 text-white">
-            Todos
-          </button>
-          <button className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50">
-            Alunos
-          </button>
-          <button className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50">
-            Professores
-          </button>
-          <button className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50">
-            Administradores
-          </button>
-          <button className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50">
-            Ativos
-          </button>
-          <button className="px-4 py-2 rounded-lg border border-neutral-200 hover:bg-neutral-50">
-            Inativos
-          </button>
-        </div>
-      </div>
+      <Card className="mb-6">
+        <CardContent className="p-6">
+          <div className="flex flex-col gap-4">
+            <div className="relative">
+              <FontAwesomeIcon
+                icon={faSearch}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
+              />
+              <Input
+                type="text"
+                placeholder="Buscar por nome, email ou CPF"
+                className="pl-10 w-full"
+              />
+            </div>
 
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="flex flex-wrap gap-2">
+              <Button variant="default">Todos</Button>
+              <Button variant="outline">Alunos</Button>
+              <Button variant="outline">Professores</Button>
+              <Button variant="outline">Administradores</Button>
+              <Button variant="outline">Ativos</Button>
+              <Button variant="outline">Inativos</Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
         <Table>
-          <TableHeader className="bg-neutral-50 border-b border-neutral-200">
+          <TableHeader className="bg-neutral-50">
             <TableRow>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                Foto
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                Nome
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                E-mail
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                CPF
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                Tipo
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                Status
-              </TableHead>
-              <TableHead className="px-6 py-3 text-left text-sm text-neutral-600">
-                Ações
-              </TableHead>
+              <TableHead className="px-6 py-3 text-left">Foto</TableHead>
+              <TableHead className="px-6 py-3 text-left">Nome</TableHead>
+              <TableHead className="px-6 py-3 text-left">E-mail</TableHead>
+              <TableHead className="px-6 py-3 text-left">CPF</TableHead>
+              <TableHead className="px-6 py-3 text-left">Tipo</TableHead>
+              <TableHead className="px-6 py-3 text-left">Status</TableHead>
+              <TableHead className="px-6 py-3 text-left">Ações</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="divide-y divide-neutral-200">
+          <TableBody>
             {users.map((user) => (
               <TableRow key={user.id} className="hover:bg-neutral-50">
                 <TableCell className="px-6 py-4">
@@ -160,20 +138,18 @@ export default function Users() {
                     width={32}
                     height={32}
                     className="w-8 h-8 rounded-full"
-                    alt="Avatar"
+                    alt={`Avatar de ${user.name}`}
                     unoptimized
                   />
                 </TableCell>
-                <TableCell className="px-6 py-4 text-sm">{user.name}</TableCell>
-                <TableCell className="px-6 py-4 text-sm">
-                  {user.email}
-                </TableCell>
-                <TableCell className="px-6 py-4 text-sm">{user.cpf}</TableCell>
-                <TableCell className="px-6 py-4 text-sm">{user.type}</TableCell>
+                <TableCell className="px-6 py-4">{user.name}</TableCell>
+                <TableCell className="px-6 py-4">{user.email}</TableCell>
+                <TableCell className="px-6 py-4">{user.cpf}</TableCell>
+                <TableCell className="px-6 py-4">{user.type}</TableCell>
                 <TableCell className="px-6 py-4">
                   <span
                     className={cn(
-                      "px-2 py-1 text-xs rounded-full",
+                      "px-2 py-1 rounded-full text-xs",
                       user.status === "Ativo"
                         ? "bg-green-100 text-green-800"
                         : "bg-red-100 text-red-800"
@@ -183,45 +159,46 @@ export default function Users() {
                   </span>
                 </TableCell>
                 <TableCell className="px-6 py-4">
-                  <div className="flex space-x-2">
-                    <button className="text-neutral-600 hover:text-neutral-900">
-                      <FontAwesomeIcon icon={faEye} width={20} />
-                    </button>
-                    <button className="text-neutral-600 hover:text-neutral-900">
-                      <FontAwesomeIcon icon={faPen} width={20} />
-                    </button>
-                    <button className="text-neutral-600 hover:text-neutral-900">
-                      <FontAwesomeIcon icon={faBan} width={20} />
-                    </button>
+                  <div className="flex gap-2">
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faEye} width={16} />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faPen} width={16} />
+                    </Button>
+                    <Button variant="ghost" size="icon">
+                      <FontAwesomeIcon icon={faBan} width={16} />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
-        <div className="px-6 py-4 border-t border-neutral-200 flex items-center justify-between">
+
+        <CardContent className="flex items-center justify-between px-6 py-4 border-t">
           <span className="text-sm text-neutral-600">
-            Mostrando 1-50 de 150 resultados
+            Mostrando 1-{users.length} de 150 resultados
           </span>
-          <div className="flex space-x-2">
-            <button className="px-3 py-1 border border-neutral-200 rounded hover:bg-neutral-50">
+          <div className="flex gap-2">
+            <Button variant="outline" size="sm">
               Anterior
-            </button>
-            <button className="px-3 py-1 bg-neutral-900 text-white rounded">
+            </Button>
+            <Button variant="default" size="sm">
               1
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 rounded hover:bg-neutral-50">
+            </Button>
+            <Button variant="outline" size="sm">
               2
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 rounded hover:bg-neutral-50">
+            </Button>
+            <Button variant="outline" size="sm">
               3
-            </button>
-            <button className="px-3 py-1 border border-neutral-200 rounded hover:bg-neutral-50">
+            </Button>
+            <Button variant="outline" size="sm">
               Próxima
-            </button>
+            </Button>
           </div>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
