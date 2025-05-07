@@ -2,12 +2,9 @@ import { faEnvelope, faEye } from "@fortawesome/free-regular-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Home() {
+export default function Login() {
   return (
-    <main
-      id="login-page"
-      className="flex items-center justify-center w-full h-[800px] bg-neutral-50"
-    >
+    <div className="flex items-center justify-center h-screen">
       <div
         id="login-container"
         className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg"
@@ -108,6 +105,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
