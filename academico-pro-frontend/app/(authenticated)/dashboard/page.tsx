@@ -40,18 +40,26 @@ const enrolledCourses = [
   },
   {
     id: 4,
-    name: "Química Geral",
-    code: "QUI101",
-    professor: "Profa. Ana Lima",
-    schedule: "Ter/Qui 08:00-10:00",
-    status: "Trancado",
-  },
-  {
-    id: 5,
     name: "Programação I",
     code: "INF101",
     professor: "Prof. Rafael Costa",
     schedule: "Qua/Sex 10:00-12:00",
+    status: "Cursando",
+  },
+  {
+    id: 5,
+    name: "Engenharia, Cidadania e Cultura",
+    code: "ENG100",
+    professor: "Profa. Fernanda Oliveira",
+    schedule: "Sex 08:00-10:00",
+    status: "Cursando",
+  },
+  {
+    id: 6,
+    name: "Arquitectura de Software",
+    code: "INF305",
+    professor: "Prof. Eduardo Braga",
+    schedule: "Ter 14:00-17:00",
     status: "Cursando",
   },
 ];
@@ -59,18 +67,28 @@ const enrolledCourses = [
 const recentGrades = [
   {
     course: "Álgebra Linear",
-    grade: 9.2,
-    average: 8.7,
-  },
-  {
-    course: "Química Geral",
-    grade: 6.8,
-    average: 7.1,
+    grade: 6.5,
+    average: 6.8,
   },
   {
     course: "Programação I",
-    grade: 8.9,
-    average: 8.5,
+    grade: 7.0,
+    average: 7.3,
+  },
+  {
+    course: "Cálculo I",
+    grade: 6.8,
+    average: 6.9,
+  },
+  {
+    course: "Física I",
+    grade: 7.4,
+    average: 7.2,
+  },
+  {
+    course: "Arquitectura de Software",
+    grade: 8.5,
+    average: 8.4,
   },
 ];
 
