@@ -99,7 +99,7 @@ export default function Disciplines() {
   return (
     <div className="flex flex-col h-full">
       {/* Cabeçalho */}
-      <header className="w-full px-6 py-4">
+      <header className="w-full">
         <div className="flex items-center justify-between">
           <h1 className="text-2xl text-neutral-900">Disciplinas Cadastradas</h1>
           <Dialog>
@@ -213,7 +213,7 @@ export default function Disciplines() {
       </header>
 
       {/* Conteúdo principal */}
-      <main className="flex-1 p-6 bg-neutral-50">
+      <main className="flex-1 bg-neutral-50">
         {/* Filtros */}
         <Card className="mb-6">
           <CardContent className="p-6">

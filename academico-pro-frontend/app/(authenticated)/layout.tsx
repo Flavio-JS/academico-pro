@@ -3,6 +3,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { Nav } from "@/components/Layout/Nav/Nav";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AuthenticatedLayout({
   children,
@@ -50,8 +51,10 @@ export default function AuthenticatedLayout({
           <Nav />
         </aside>
 
-        <main className="flex-1 ml-64 p-6 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-hidden">
-          {children}
+        <main className="flex-1 ml-64 bg-neutral-50 min-h-[calc(100vh-72px)] overflow-y-hidden">
+          <ScrollArea className="h-[calc(100vh-72px)] p-6">
+            {children}
+          </ScrollArea>
         </main>
       </div>
     </>

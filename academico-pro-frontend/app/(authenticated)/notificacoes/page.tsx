@@ -54,7 +54,7 @@ const notifications = [
 
 export default function Notifications() {
   return (
-    <div className="flex-1 bg-neutral-50 p-6">
+    <div className="flex-1 bg-neutral-50">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Formulário de nova notificação */}
         <div className="bg-white rounded-lg shadow p-6">

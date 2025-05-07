@@ -80,13 +80,13 @@ const users: UserDataTable[] = [
 
 export default function Users() {
   return (
-    <div className="flex-1 p-6 bg-neutral-50 overflow-auto">
+    <div className="flex-1 bg-neutral-50 overflow-auto">
       <div id="page-header" className="flex justify-between items-center mb-6">
         <h2 className="text-2xl text-neutral-900">Gestão de Usuários</h2>
-        <button className="bg-neutral-900 text-white px-4 py-2 rounded-lg flex items-center space-x-2">
+        <Button className="gap-2">
           <FontAwesomeIcon icon={faPlus} width={20} height={20} />
           <span>Novo Usuário</span>
-        </button>
+        </Button>
       </div>
 
       <Card className="mb-6">

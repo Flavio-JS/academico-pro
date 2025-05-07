@@ -55,7 +55,7 @@ const stats = {
 
 export default function Report() {
   return (
-    <div className="flex-1 bg-neutral-50 p-6">
+    <div className="flex-1 bg-neutral-50">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           {/* Cabeçalho do aluno */}

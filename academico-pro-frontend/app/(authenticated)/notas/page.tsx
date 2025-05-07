@@ -17,6 +17,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { PerformanceChart } from "@/components/GadePage/PerformanceChart";
 
 // Mock de dados para alunos
 const students = [
@@ -66,7 +67,7 @@ const classStats = {
 
 export default function Grade() {
   return (
-    <div className="flex-1 bg-neutral-50 p-6">
+    <div className="flex-1 bg-neutral-50">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-2xl text-neutral-900 mb-6">Lançamento de Notas</h2>
 
@@ -178,9 +179,8 @@ export default function Grade() {
             <h3 className="text-lg text-neutral-900">Desempenho da Turma</h3>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px] bg-neutral-100 rounded-lg flex items-center justify-center">
-              <span className="text-neutral-600">Gráfico de Desempenho</span>
-            </div>
+            <PerformanceChart />
+
             <div className="grid grid-cols-3 gap-4 mt-4">
               <Card>
                 <CardContent className="p-4">
