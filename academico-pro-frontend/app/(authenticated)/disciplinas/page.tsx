@@ -100,7 +100,7 @@ export default function Disciplines() {
     <div className="flex flex-col h-full">
       {/* Cabeçalho */}
       <header className="w-full">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl text-neutral-900">Disciplinas Cadastradas</h1>
           <Dialog>
             <DialogTrigger asChild>
