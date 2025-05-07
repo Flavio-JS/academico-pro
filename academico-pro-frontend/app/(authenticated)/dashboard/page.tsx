@@ -1,3 +1,5 @@
+"use client";
+
 import { faBell, faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import { GradeEvolutionChart } from "@/components/DashboardPage/GradeEvolutionChart";
 
 const enrolledCourses = [
   {
@@ -176,15 +179,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-0 h-[200px] flex items-center justify-center">
-              <div className="text-center p-6">
-                <p className="text-neutral-600">
-                  Gráfico de Evolução das Notas
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <GradeEvolutionChart />
         </div>
       </section>
 
