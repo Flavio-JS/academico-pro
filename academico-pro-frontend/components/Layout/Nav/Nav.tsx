@@ -7,10 +7,11 @@ import {
   faBell,
   faHouse,
   faBook,
-  faStar,
   faFileLines,
   faUser,
   faUsers,
+  faChartSimple,
+  faGraduationCap,
 } from "@fortawesome/free-solid-svg-icons";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -66,7 +67,7 @@ export const Nav = () => {
           }
         )}
       >
-        <FontAwesomeIcon width={20} icon={faFileLines} />
+        <FontAwesomeIcon width={20} icon={faGraduationCap} />
         <span>Matriculas</span>
       </Link>
       <Link
@@ -78,7 +79,7 @@ export const Nav = () => {
           }
         )}
       >
-        <FontAwesomeIcon width={20} icon={faStar} />
+        <FontAwesomeIcon width={20} icon={faChartSimple} />
         <span>Notas</span>
       </Link>
       <Link
