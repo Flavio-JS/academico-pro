@@ -14,7 +14,7 @@ export default function Profile() {
         <div className="bg-white rounded-lg shadow">
           {/* Navegação por abas */}
           <div className="border-b border-neutral-200">
-            <Tabs defaultValue="personal" className="w-full">
+            <Tabs defaultValue="personal" className="w-full py-2">
               <TabsList className="w-full justify-start p-0 bg-white">
                 <TabsTrigger
                   value="personal"
