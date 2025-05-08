@@ -12,6 +12,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { GradeEvolutionChart } from "@/components/DashboardPage/GradeEvolutionChart";
+import { AcademicCalendar } from "@/components/DashboardPage/AcademicCalendar";
 
 const enrolledCourses = [
   {
@@ -159,6 +160,18 @@ export default function Dashboard() {
             </Card>
           ))}
         </div>
+      </section>
+
+      {/* Seção de Calendário Acadêmico */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-neutral-700">
+          Calendário Acadêmico
+        </h2>
+        <Card>
+          <CardContent className="p-6">
+            <AcademicCalendar />
+          </CardContent>
+        </Card>
       </section>
 
       {/* Seção de Notas Recentes */}
