@@ -7,8 +7,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { ChartContainer, ChartTooltip } from "../ui/chart";
+} from "../../ui/card";
+import { ChartContainer, ChartTooltip } from "../../ui/chart";
 
 const gradeEvolutionChartConfig = {
   "Cálculo I": {

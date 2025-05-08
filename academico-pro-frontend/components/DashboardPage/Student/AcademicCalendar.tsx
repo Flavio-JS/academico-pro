@@ -1,87 +1,26 @@
 "use client";
 
-import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format, isSameMonth } from "date-fns";
-
-type AcademicEvent = {
-  date: Date;
-  title: string;
-  description: string;
-  type: "holiday" | "exam" | "deadline" | "event";
-};
+import { format } from "date-fns";
+import { useAcademicCalendar } from "./hooks/useAcademicCalendar";
 
 // Dados de exemplo (substitua pelos seus dados reais)
-const toDay = new Date();
-
-const academicEvents: AcademicEvent[] = [
-  {
-    date: new Date(toDay.getFullYear(), toDay.getMonth(), 3),
-    title: "Último dia para trancamento",
-    description: "Prazo final para trancamento de disciplinas",
-    type: "deadline",
-  },
-  {
-    date: new Date(toDay.getFullYear(), toDay.getMonth(), 7),
-    title: "Semana de Provas",
-    description: "Período de avaliações do bimestre",
-    type: "exam",
-  },
-  {
-    date: new Date(toDay.getFullYear(), toDay.getMonth(), 14),
-    title: "Feriado - Dia de Algum feriado",
-    description: "Não haverá aula",
-    type: "holiday",
-  },
-  {
-    date: new Date(toDay.getFullYear(), toDay.getMonth(), 14),
-    title: "Deadline",
-    description: "Prazo final para trancamento de disciplinas",
-    type: "deadline",
-  },
-  {
-    date: new Date(toDay.getFullYear(), toDay.getMonth(), 14),
-    title: "Evento",
-    description: "Descrição do evento",
-    type: "event",
-  },
-];
 
 export const AcademicCalendar = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-
-  // Função para verificar se uma data tem evento
-  const hasEvent = (date: Date) => {
-    return academicEvents.some(
-      (event) =>
-        event.date.getDate() === date.getDate() &&
-        event.date.getMonth() === date.getMonth() &&
-        event.date.getFullYear() === date.getFullYear()
-    );
-  };
-
-  // Função para obter os eventos de uma data específica
-  const getEventsForDate = (date: Date) => {
-    return academicEvents.filter(
-      (event) =>
-        event.date.getDate() === date.getDate() &&
-        event.date.getMonth() === date.getMonth() &&
-        event.date.getFullYear() === date.getFullYear()
-    );
-  };
-
-  // Função para obter todos os eventos do mês atual
-  const getEventsForCurrentMonth = () => {
-    return academicEvents
-      .filter((event) => isSameMonth(event.date, currentMonth))
-      .sort((a, b) => a.date.getTime() - b.date.getTime());
-  };
+  const {
+    hasEvent,
+    selectedDate,
+    setSelectedDate,
+    handleMonthChange,
+    getEventsForDate,
+    currentMonth,
+    getEventsForCurrentMonth,
+  } = useAcademicCalendar();
 
   // Estilos para os modificadores
   const modifiers = {
@@ -92,11 +31,6 @@ export const AcademicCalendar = () => {
     hasEvent: {
       borderBottom: "2px solid #3b82f6",
     },
-  };
-
-  const handleMonthChange = (date: Date) => {
-    setCurrentMonth(date);
-    setSelectedDate(undefined); // Limpa a seleção ao mudar de mês
   };
 
   return (

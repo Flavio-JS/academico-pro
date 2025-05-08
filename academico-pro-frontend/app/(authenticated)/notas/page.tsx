@@ -17,7 +17,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { PerformanceChart } from "@/components/GadePage/PerformanceChart";
+import { PerformanceChart } from "@/components/GradePage/PerformanceChart";
 
 // Mock de dados para alunos
 const students = [
