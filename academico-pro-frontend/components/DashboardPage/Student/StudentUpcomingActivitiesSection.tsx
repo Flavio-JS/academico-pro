@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useStudentUpcomingActivitiesSection } from "./hooks/useStudentUpcomingActivitiesSection";
+import { cn } from "@/lib/utils";
 
 export const StudentUpcomingActivitiesSection = () => {
   const {
@@ -32,7 +33,10 @@ export const StudentUpcomingActivitiesSection = () => {
                         Prazo: {activity.dueDate}
                       </span>
                       <span
-                        className={getDeadlineBadgeClass(activity.daysLeft)}
+                        className={cn(
+                          getDeadlineBadgeClass(activity.daysLeft),
+                          "hidden md:block"
+                        )}
                       >
                         {activity.daysLeft <= 0
                           ? "Vencido"
@@ -42,9 +46,23 @@ export const StudentUpcomingActivitiesSection = () => {
                       </span>
                     </div>
                   </div>
-                  <span className={getAssignmentStatusClass(activity.status)}>
-                    {getAssignmentStatusLabel(activity.status)}
-                  </span>
+                  <div className="flex flex-col min-h-[80px] md:h-min justify-between">
+                    <span className={getAssignmentStatusClass(activity.status)}>
+                      {getAssignmentStatusLabel(activity.status)}
+                    </span>
+                    <span
+                      className={cn(
+                        getDeadlineBadgeClass(activity.daysLeft),
+                        "block text-center md:hidden"
+                      )}
+                    >
+                      {activity.daysLeft <= 0
+                        ? "Vencido"
+                        : `${activity.daysLeft} dia${
+                            activity.daysLeft !== 1 ? "s" : ""
+                          } restante${activity.daysLeft !== 1 ? "s" : ""}`}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}

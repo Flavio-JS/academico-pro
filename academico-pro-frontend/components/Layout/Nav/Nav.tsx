@@ -1,124 +1,44 @@
 "use client";
 
-import * as React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBell,
-  faHouse,
-  faBook,
-  faFileLines,
-  faUser,
-  faUsers,
-  faChartSimple,
-  faGraduationCap,
-} from "@fortawesome/free-solid-svg-icons";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { navItems } from "./navItems";
 
-export const Nav = () => {
+export type NavProps = {
+  closeTrigger?: React.ElementType;
+};
+
+export const Nav = ({ closeTrigger: CloseTrigger }: NavProps) => {
   const pathname = usePathname();
 
   return (
     <nav className="space-y-2">
-      <Link
-        href="/dashboard"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-900 cursor-pointer",
-          {
-            "bg-neutral-100": pathname.includes("/dashboard"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faHouse} />
-        <span>Dashboard</span>
-      </Link>
-      <Link
-        href="/usuarios"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-900 cursor-pointer",
-          {
-            "bg-neutral-100": pathname.includes("/usuarios"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faUsers} />
-        <span>Usuários</span>
-      </Link>
-      <Link
-        href="/disciplinas"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900":
-              pathname.includes("/disciplinas"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faBook} />
-        <span>Disciplinas</span>
-      </Link>
-      <Link
-        href="/matriculas"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900": pathname.includes("/matriculas"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faGraduationCap} />
-        <span>Matriculas</span>
-      </Link>
-      <Link
-        href="/notas"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900": pathname.includes("/notas"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faChartSimple} />
-        <span>Notas</span>
-      </Link>
-      <Link
-        href="/boletim"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900": pathname.includes("/boletim"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faFileLines} />
-        <span>Boletim</span>
-      </Link>
-      <Link
-        href="/notificacoes"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900":
-              pathname.includes("/notificacoes"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faBell} />
-        <span>Notificações</span>
-      </Link>
-      <Link
-        href="/perfil"
-        className={cn(
-          "flex items-center gap-3 p-3 rounded-lg text-neutral-600 cursor-pointer hover:bg-neutral-50",
-          {
-            "bg-neutral-100 text-neutral-900": pathname.includes("/perfil"),
-          }
-        )}
-      >
-        <FontAwesomeIcon width={20} icon={faUser} />
-        <span>Perfil</span>
-      </Link>
+      {navItems.map(({ href, icon, label }) => {
+        const isActive = pathname.includes(href);
+        const link = (
+          <Link
+            key={href}
+            href={href}
+            className={cn(
+              "flex items-center gap-3 p-3 rounded-lg cursor-pointer hover:bg-neutral-50",
+              isActive ? "text-neutral-900 bg-neutral-100" : "text-neutral-600"
+            )}
+          >
+            <FontAwesomeIcon width={20} icon={icon} />
+            <span>{label}</span>
+          </Link>
+        );
+
+        return CloseTrigger ? (
+          <CloseTrigger key={href} asChild>
+            {link}
+          </CloseTrigger>
+        ) : (
+          link
+        );
+      })}
     </nav>
   );
 };
