@@ -1,6 +1,5 @@
 "use client";
 
-import { faBell, faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Card,
@@ -13,121 +12,20 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { GradeEvolutionChart } from "@/components/DashboardPage/GradeEvolutionChart";
 import { AcademicCalendar } from "@/components/DashboardPage/AcademicCalendar";
-
-const enrolledCourses = [
-  {
-    id: 1,
-    name: "Cálculo I",
-    code: "MAT101",
-    professor: "Prof. João Silva",
-    schedule: "Seg/Qua 08:00-10:00",
-    status: "Cursando",
-  },
-  {
-    id: 2,
-    name: "Física I",
-    code: "FIS101",
-    professor: "Profa. Maria Santos",
-    schedule: "Ter/Qui 10:00-12:00",
-    status: "Concluído",
-  },
-  {
-    id: 3,
-    name: "Álgebra Linear",
-    code: "MAT201",
-    professor: "Prof. Carlos Mendes",
-    schedule: "Seg/Sex 14:00-16:00",
-    status: "Cursando",
-  },
-  {
-    id: 4,
-    name: "Programação I",
-    code: "INF101",
-    professor: "Prof. Rafael Costa",
-    schedule: "Qua/Sex 10:00-12:00",
-    status: "Cursando",
-  },
-  {
-    id: 5,
-    name: "Engenharia, Cidadania e Cultura",
-    code: "ENG100",
-    professor: "Profa. Fernanda Oliveira",
-    schedule: "Sex 08:00-10:00",
-    status: "Cursando",
-  },
-  {
-    id: 6,
-    name: "Arquitectura de Software",
-    code: "INF305",
-    professor: "Prof. Eduardo Braga",
-    schedule: "Ter 14:00-17:00",
-    status: "Cursando",
-  },
-];
-
-const recentGrades = [
-  {
-    course: "Álgebra Linear",
-    grade: 6.5,
-    average: 6.8,
-  },
-  {
-    course: "Programação I",
-    grade: 7.0,
-    average: 7.3,
-  },
-  {
-    course: "Cálculo I",
-    grade: 6.8,
-    average: 6.9,
-  },
-  {
-    course: "Física I",
-    grade: 7.4,
-    average: 7.2,
-  },
-  {
-    course: "Arquitectura de Software",
-    grade: 8.5,
-    average: 8.4,
-  },
-];
-
-const notifications = [
-  {
-    id: 1,
-    type: "activity",
-    message: "Lista de exercícios 2 disponível em Álgebra Linear",
-    date: "05/05/2025 10:15",
-    icon: faBell,
-  },
-  {
-    id: 2,
-    type: "grade",
-    message: "Nota de Química Geral foi publicada",
-    date: "04/05/2025 19:45",
-    icon: faStar,
-  },
-  {
-    id: 3,
-    type: "activity",
-    message: "Nova aula gravada em Programação I",
-    date: "03/05/2025 09:30",
-    icon: faBell,
-  },
-  {
-    id: 4,
-    type: "grade",
-    message: "Nota final lançada em Álgebra Linear",
-    date: "02/05/2025 16:00",
-    icon: faStar,
-  },
-];
+import { BookOpen, FileText, LinkIcon, Video } from "lucide-react";
+import Link from "next/link";
+import {
+  courseMaterials,
+  enrolledCourses,
+  notifications,
+  recentGrades,
+  upcomingAssignments,
+} from "@/mocks/dashboard-page.mock";
 
 export default function Dashboard() {
   return (
     <div className="space-y-8">
-      {/* Seção de Disciplinas Matriculadas */}
+      {/* Seção de Disciplinas Matriculadas com Links Rápidos */}
       <section>
         <h2 className="text-xl font-semibold mb-4 text-neutral-700">
           Minhas Disciplinas Matriculadas
@@ -143,7 +41,7 @@ export default function Dashboard() {
                   <p>{course.schedule}</p>
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="space-y-3">
                 <span
                   className={cn(
                     "text-sm px-3 py-1 rounded-full",
@@ -156,10 +54,111 @@ export default function Dashboard() {
                 >
                   {course.status}
                 </span>
+
+                {/* Links rápidos para materiais */}
+                <div className="mt-2">
+                  <h4 className="text-sm font-medium mb-1">Materiais:</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {courseMaterials[course.code]?.map((material) => (
+                      <Link
+                        key={material.id}
+                        href={material.url}
+                        className="text-xs px-2 py-1 bg-neutral-100 hover:bg-neutral-200 rounded-md flex items-center gap-1"
+                        target="_blank"
+                      >
+                        {material.type === "pdf" && <FileText size={14} />}
+                        {material.type === "link" && <LinkIcon size={14} />}
+                        {material.type === "book" && <BookOpen size={14} />}
+                        {material.type === "video" && <Video size={14} />}
+                        {material.name}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
           ))}
         </div>
+      </section>
+
+      {/* Seção de Próximas Atividades/Tarefas */}
+      <section>
+        <h2 className="text-xl font-semibold mb-4 text-neutral-700">
+          Próximas Atividades
+        </h2>
+        <Card>
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              {upcomingAssignments.map((assignment) => {
+                const course = enrolledCourses.find(
+                  (c) => c.code === assignment.courseId
+                );
+                const daysLeft = Math.ceil(
+                  (assignment.dueDate.getTime() - new Date().getTime()) /
+                    (1000 * 60 * 60 * 24)
+                );
+
+                return (
+                  <div
+                    key={assignment.id}
+                    className="pb-4 border-b border-neutral-100 last:border-0 last:pb-0"
+                  >
+                    <div className="flex justify-between items-start gap-2">
+                      <div>
+                        <h4 className="text-neutral-800 font-medium">
+                          {course?.name || assignment.courseId} -{" "}
+                          {assignment.title}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-sm text-neutral-600">
+                            Prazo: {assignment.dueDate.toLocaleDateString()}
+                          </span>
+                          <span
+                            className={cn(
+                              "text-xs px-2 py-0.5 rounded-full",
+                              daysLeft <= 3
+                                ? "bg-red-100 text-red-800"
+                                : daysLeft <= 7
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-green-100 text-green-800"
+                            )}
+                          >
+                            {daysLeft <= 0
+                              ? "Vencido"
+                              : `${daysLeft} dia${
+                                  daysLeft !== 1 ? "s" : ""
+                                } restante${daysLeft !== 1 ? "s" : ""}`}
+                          </span>
+                        </div>
+                      </div>
+                      <span
+                        className={cn(
+                          "text-sm px-3 py-1 rounded-full whitespace-nowrap",
+                          assignment.status === "pending" &&
+                            "bg-yellow-100 text-yellow-800",
+                          assignment.status === "submitted" &&
+                            "bg-blue-100 text-blue-800",
+                          assignment.status === "late" &&
+                            "bg-red-100 text-red-800",
+                          assignment.status === "graded" &&
+                            "bg-green-100 text-green-800"
+                        )}
+                      >
+                        {assignment.status === "pending"
+                          ? "Pendente"
+                          : assignment.status === "submitted"
+                          ? "Enviado"
+                          : assignment.status === "late"
+                          ? "Atrasado"
+                          : "Avaliado"}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
       </section>
 
       {/* Seção de Calendário Acadêmico */}
