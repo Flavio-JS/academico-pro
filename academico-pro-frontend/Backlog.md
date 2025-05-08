@@ -85,44 +85,51 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 
 - [ ] Adicionar links rápidos para materiais nas disciplinas
 - [ ] Listar próximas atividades/tarefas
-  - Criar mock `upcomingTasks`
   - Exibir com prazo e status
 - [ ] Exibir calendário acadêmico com datas importantes
   - Criar componente `<AcademicCalendar />`
-  - Utilizar `academicDates` mock
 
 ### 📄 Página: Disciplinas
 
 - [ ] Exibir disciplinas matriculadas no semestre atual
 - [ ] Exibir informações da disciplina
-  - Nome, professor, ementa resumida
-- [ ] Acesso a materiais da disciplina (se houver integração futura)
+  - Nome, professor, ementa
+- [ ] Acesso a materiais da disciplina
 
 ### 📄 Página: Notas
 
 - [ ] Consulta detalhada por disciplina
   - Listagem de avaliações e notas
   - Filtro por semestre
-- [ ] Gráficos de desempenho ao longo do semestre
+- [ ] Gráficos de desempenho por semestre
   - Criar componente `<StudentPerformanceChart />`
-- [ ] Comparação com média da turma (se permitido)
-  - Mostrar ao lado de cada nota, se habilitado
 
 ### 📄 Página: Boletim
 
-- [ ] Histórico completo de todas as disciplinas cursadas
-  - Navegação por semestre anterior ou dropdown para seleção
+- [ ] Histórico completo com navegação por semestre
 
 ### 📄 Página: Notificações
 
-- [ ] Visualização de notificações recebidas
+- [ ] Visualizar notificações recebidas
   - Lista com data, assunto e remetente
-  - Apenas leitura, sem envio
+  - Apenas leitura
 
 ### 📄 Página: Perfil
 
-- [ ] Alteração de senha (aba "Segurança")
-- [ ] Definições de preferências gerais (tema, notificações etc.)
+- [ ] Alteração de senha
+- [ ] Preferências gerais (tema, notificações)
+
+### 📄 Página: Mensagens Internas / Contato
+
+- [ ] Enviar mensagem para professor ou ADM
+- [ ] Visualizar histórico de conversas
+- [ ] Notificações de nova mensagem
+
+### 📄 Página: Solicitações
+
+- [ ] Enviar requerimentos (segunda chamada, revisão, etc.)
+- [ ] Acompanhar status da solicitação
+- [ ] Visualizar histórico
 
 ---
 
@@ -131,36 +138,37 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 ### 📄 Página: Dashboard
 
 - [ ] Exibir turmas atuais
-  - Criar mock `currentClasses`
-- [ ] Listar disciplinas que leciona no semestre
-  - Criar mock `teachingCourses`
-- [ ] Mostrar avisos importantes da coordenação
-  - Criar mock `coordinationNotices`
-- [ ] Exibir próximas atividades a serem corrigidas
-  - Criar mock `pendingCorrections`
+- [ ] Disciplinas atribuídas
+- [ ] Avisos da coordenação
+- [ ] Atividades a corrigir
 
 ### 📄 Página: Disciplinas
 
 - [ ] Listar disciplinas atribuídas ao professor
-- [ ] Gerenciar turmas e alunos matriculados
-- [ ] Upload de materiais da disciplina
-- [ ] Editar ementa e informações básicas
+- [ ] Gerenciar turmas e alunos
+- [ ] Upload de materiais
+- [ ] Editar ementa e informações
 
 ### 📄 Página: Notas
 
-- [ ] Edição de notas já lançadas
-  - Permitir atualização inline ou via modal
-- [ ] Exportação de planilhas com notas
-  - Botão “Exportar” com download em .csv ou .xlsx
+- [ ] Editar notas
+- [ ] Exportar planilhas
 
 ### 📄 Página: Perfil
 
-- [ ] Visualização e edição de dados pessoais e profissionais
-  - Nome, e-mail institucional, telefone
-  - Área de atuação e disciplina(s) vinculada(s)
-- [ ] Link externo para currículo (Lattes/LinkedIn)
-- [ ] Configurações de notificações (aba "Preferências")
-- [ ] Alteração de senha
+- [ ] Editar dados pessoais e profissionais
+- [ ] Currículo externo (Lattes, LinkedIn)
+- [ ] Preferências / senha
+
+### 📄 Página: Mensagens Internas / Contato
+
+- [ ] Enviar mensagem para alunos ou ADM
+- [ ] Visualizar histórico de conversas
+
+### 📄 Página: Solicitações
+
+- [ ] Visualizar solicitações recebidas
+- [ ] Aprovar ou rejeitar
 
 ---
 
@@ -168,58 +176,57 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 
 ### 📄 Página: Dashboard
 
-- [ ] Exibir estatísticas gerais da instituição
-  - Criar componente `<InstitutionStats />`
-  - Incluir gráficos (opcional)
-- [ ] Mostrar números gerais:
+- [ ] Estatísticas gerais
+- [ ] Números institucionais
   - Total de alunos
   - Total de professores
   - Total de disciplinas
-- [ ] Exibir alertas do sistema (pendências, etc.)
-  - Criar mock `systemAlerts`
+- [ ] Alertas do sistema
 
 ### 📄 Página: Gestão de Usuários
 
-- [ ] Criar novo usuário (formulário)
-- [ ] Redefinir senha administrativa
-- [ ] Implementar ativação/desativação funcional de contas
-- [ ] Implementar backend completo de CRUD para todos os perfis
-- [ ] Implementar backend da busca avançada
+- [ ] Criar novo usuário
+- [ ] Redefinir senha
+- [ ] Ativar/desativar contas
+- [ ] CRUD completo para todos os perfis
 
 ### 📄 Página: Gestão de Disciplinas
 
-- [ ] Editar disciplinas existentes
-- [ ] Atribuir professores a disciplinas
-- [ ] Vincular disciplinas a cursos
-- [ ] Definir status (ativa/inativa)
-- [ ] Validação de código único e requisitos
-- [ ] Implementar backend do CRUD de disciplinas
+- [ ] Editar disciplinas
+- [ ] Atribuir professores
+- [ ] Vincular a cursos
 
 ### 📄 Página: Gestão de Matrículas
 
-- [ ] Matrícula em lote (importação via planilha)
-  - Criar botão de upload
-  - Validar estrutura e dados da planilha
+- [ ] Matrícula em lote (planilha)
+  - Disponibilizar modelo de planilha
+  - Upload da planilha preenchida
+  - Validar planilha
   - Exibir feedback de sucesso/erros
-- [ ] Ajuste manual de matrícula
-  - Abrir modal com lista de disciplinas disponíveis
-  - Adicionar/Remover disciplinas
-- [ ] Exibir histórico de alterações
-  - Criar botão “Ver histórico”
-  - Modal com timeline de ações por matrícula
+- [ ] Ajuste manual
+- [ ] Histórico de alterações
 
 ### 📄 Página: Perfil
 
-- [ ] Gerenciamento de permissões e acessos (não disponível ao próprio perfil, mas via painel)
-- [ ] Alteração de senha
-- [ ] Preferências do sistema (idioma, fuso horário, etc.)
+- [ ] Permissões e acessos
+- [ ] Senha / preferências
+
+### 📄 Página: Mensagens Internas / Contato
+
+- [ ] Enviar mensagens para alunos e professores
+- [ ] Visualizar histórico
+
+### 📄 Página: Solicitações
+
+- [ ] Gerenciar e auditar
+- [ ] Atribuir responsáveis
+- [ ] Visualizar histórico completo
 
 ---
 
 ## 💡 Melhorias Técnicas Futuras
 
-- [ ] Separar dashboards e páginas por `role` do usuário
-  - Implementar autenticação e controle de acesso
-- [ ] Refatorar componentes em arquivos reutilizáveis
-- [ ] Implementar paginação/lazy loading real
+- [ ] Separar dashboards e páginas por `role`
+- [ ] Refatorar componentes reutilizáveis
+- [ ] Implementar paginação real
 - [ ] Garantir responsividade e acessibilidade
