@@ -11,6 +11,8 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 - [x] Listar Disciplinas Matriculadas
 - [x] Mostrar Notas Recentes
 - [x] Mostrar Notificações Recentes
+- [x] Exibir calendário acadêmico com datas importantes
+  - Criar componente `<AcademicCalendar />`
 
 ### 📄 Página: Gestão de Usuários (ADM)
 
@@ -86,8 +88,6 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 - [ ] Adicionar links rápidos para materiais nas disciplinas
 - [ ] Listar próximas atividades/tarefas
   - Exibir com prazo e status
-- [ ] Exibir calendário acadêmico com datas importantes
-  - Criar componente `<AcademicCalendar />`
 
 ### 📄 Página: Disciplinas
 
