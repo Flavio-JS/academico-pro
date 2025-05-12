@@ -34,7 +34,7 @@ export const AcademicCalendar = () => {
   };
 
   return (
-    <div className="flex flex-col xl:flex-row gap-4">
+    <div className="flex flex-col lg:flex-row gap-4">
       <Calendar
         mode="single"
         selected={selectedDate}

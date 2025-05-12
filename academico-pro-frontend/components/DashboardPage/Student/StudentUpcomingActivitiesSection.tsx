@@ -46,7 +46,7 @@ export const StudentUpcomingActivitiesSection = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex flex-col min-h-[80px] md:h-min justify-between">
+                  <div className="flex flex-col min-h-[80px] text-center md:h-min justify-between">
                     <span className={getAssignmentStatusClass(activity.status)}>
                       {getAssignmentStatusLabel(activity.status)}
                     </span>

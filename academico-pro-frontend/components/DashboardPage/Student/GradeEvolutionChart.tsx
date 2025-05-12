@@ -95,8 +95,11 @@ export const GradeEvolutionChart = () => {
           Progresso das suas notas ao longo do semestre
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={gradeEvolutionChartConfig} className="w-full">
+      <CardContent className="h-[calc(100%-90px)]">
+        <ChartContainer
+          config={gradeEvolutionChartConfig}
+          className="w-full h-full"
+        >
           <LineChart
             data={gradeEvolutionData}
             margin={{
