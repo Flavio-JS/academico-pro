@@ -24,4 +24,11 @@ export const upcomingAssignments: Assignment[] = [
     dueDate: new Date(today.getFullYear(), today.getMonth() - 1, 22),
     status: "submitted",
   },
+  {
+    id: "4",
+    courseId: "MAT201",
+    title: "Tarefa 2 - Algebra Linear",
+    dueDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 8),
+    status: "late",
+  },
 ];

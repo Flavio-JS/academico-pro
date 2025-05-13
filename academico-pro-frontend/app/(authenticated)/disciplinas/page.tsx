@@ -1,17 +1,19 @@
-import { DisciplinesPage } from "@/components/DisciplinesPage/Admin/DisciplinesPage";
+import { AdminDisciplinesPage } from "@/components/DisciplinesPage/Admin/AdminDisciplinesPage";
+import { StudentDisciplinesPage } from "@/components/DisciplinesPage/Student/StudentDisciplinesPage";
 
 export default function Disciplines() {
   const user = {
-    role: "admin",
+    role: "student",
   };
 
   return (
     <>
       {/* Aluno Disciplines */}
+      {user.role === "student" && <StudentDisciplinesPage />}
 
       {/* Professor Dashboard */}
 
-      {user.role === "admin" && <DisciplinesPage />}
+      {user.role === "admin" && <AdminDisciplinesPage />}
     </>
   );
 }

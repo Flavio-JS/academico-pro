@@ -4,7 +4,7 @@ import { DisciplineHeader } from "./DisciplineHeader";
 import { DisciplinesTable } from "./DisciplinesTable";
 import { disciplines } from "./mocks/disciplines.mocks";
 
-export function DisciplinesPage() {
+export function AdminDisciplinesPage() {
   return (
     <div className="flex flex-col h-full">
       <DisciplineHeader />

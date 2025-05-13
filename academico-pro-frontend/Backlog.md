@@ -93,6 +93,17 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
   - Nome, professor, ementa
 - [ ] Acesso a materiais da disciplina
 
+### 📄 Página: Detalhes da Disciplina
+
+- [ ] Cabeçalho com nome, código, professor, status, período, horário e local
+- [ ] Visão geral: ementa, objetivos, pré-requisitos
+- [ ] Materiais por tipo e unidade, com filtros e datas
+- [ ] Atividades e avaliações com status, notas e calendário
+- [ ] Presenças e cronograma de aulas
+- [ ] Desempenho: quadro de notas, média e gráfico
+- [ ] Anúncios recentes e equipe da disciplina
+- [ ] Ações rápidas: envio de trabalho e download de materiais
+
 ### 📄 Página: Notas
 
 - [ ] Consulta detalhada por disciplina
