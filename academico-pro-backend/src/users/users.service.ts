@@ -46,10 +46,16 @@ export class UsersService {
     return this.mapToDto(user);
   }
 
-  async findByEmail(email: string) {
-    return this.prisma.user.findUnique({
+  async findByEmail(email: string): Promise<UserResponseDto> {
+    const user = await this.prisma.user.findUnique({
       where: { email },
     });
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
+    return this.mapToDto(user);
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {
@@ -74,6 +80,7 @@ export class UsersService {
       id: user.id,
       name: user.name,
       email: user.email,
+      password: user.password,
       cpf: user.cpf,
       role: user.role,
       isActive: user.isActive,

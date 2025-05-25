@@ -1,14 +1,13 @@
 import { Role } from '@prisma/client';
 
-export class UserResponseDto {
+export type UserWithoutPassword = {
   id: string;
   name: string;
   email: string;
-  password: string;
   cpf: string;
   role: Role;
-  avatarUrl?: string | null;
+  avatarUrl: string | null;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
-}
+};
