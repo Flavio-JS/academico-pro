@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,12 +12,15 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 export default function AuthenticatedLayout({
   children,
 }: {
   children: ReactNode;
 }) {
+  useAuthCheck();
+
   return (
     <>
       <nav className="bg-white border-b border-neutral-200 fixed w-full top-0 z-50">
