@@ -14,13 +14,13 @@ import { formatCPF } from "@/lib/utils/formatCPF";
 
 export const UsersTable = ({
   users,
-  onView,
-  onEdit,
+  onUserUpdated,
+  onUserDeleted,
   onToggleStatus,
 }: {
   users: User[];
-  onView: (id: string) => void;
-  onEdit: (id: string) => void;
+  onUserUpdated: (user: User) => void;
+  onUserDeleted: (userId: string) => void;
   onToggleStatus: (id: string) => void;
 }) => {
   const getRoleName = (role: User["role"]) => {
@@ -77,8 +77,9 @@ export const UsersTable = ({
               </TableCell>
               <TableCell className="px-6 py-4">
                 <UserActions
-                  onView={() => onView(user.id)}
-                  onEdit={() => onEdit(user.id)}
+                  user={user}
+                  onUserUpdated={onUserUpdated}
+                  onUserDeleted={onUserDeleted}
                   onToggleStatus={() => onToggleStatus(user.id)}
                 />
               </TableCell>

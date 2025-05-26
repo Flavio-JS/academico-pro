@@ -35,6 +35,7 @@ import { User } from "./types/User.types";
 import { UserRoles } from "@/lib/schemas/auth";
 import Image from "next/image";
 import { formatCPF } from "@/lib/utils/formatCPF";
+import { avatarOptions } from "@/lib/utils/avatarOptions";
 
 interface AddUserDialogProps {
   onUserAdded: (user: User) => void;
@@ -197,63 +198,38 @@ export const AddUserDialog = ({ onUserAdded }: AddUserDialogProps) => {
               <FormField
                 control={form.control}
                 name="avatarUrl"
-                render={({ field }) => {
-                  const avatarOptions = [
-                    "Robert",
-                    "Kimberly",
-                    "Luis",
-                    "Nolan",
-                    "Aiden",
-                    "Valentina",
-                    "Katherine",
-                    "Vivian",
-                    "Christopher",
-                    "Emery",
-                    "Mackenzie",
-                    "Jocelyn",
-                    "Aidan",
-                    "Eliza",
-                    "Jude",
-                    "Jameson",
-                    "Ryker",
-                    "Riley",
-                    "Avery",
-                    "Easton",
-                  ];
-
-                  return (
-                    <FormItem>
-                      <FormLabel>Escolha um Avatar</FormLabel>
-                      <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
-                        {avatarOptions.map((seed) => {
-                          const url = `https://api.dicebear.com/9.x/notionists/svg?seed=${seed}`;
-                          return (
-                            <button
-                              key={seed}
-                              type="button"
-                              className={`border-2 rounded-lg p-1 hover:border-blue-500 transition ${
-                                field.value === url
-                                  ? "border-blue-500"
-                                  : "border-transparent"
-                              }`}
-                              onClick={() => field.onChange(url)}
-                            >
-                              <Image
-                                src={url}
-                                alt={seed}
-                                className="w-full aspect-square object-cover rounded"
-                                width={40}
-                                height={40}
-                                unoptimized
-                              />
-                            </button>
-                          );
-                        })}
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  );
-                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Escolha um Avatar</FormLabel>
+                    <div className="grid grid-cols-3 gap-2 max-h-48 overflow-y-auto">
+                      {avatarOptions.map((seed) => {
+                        const url = `https://api.dicebear.com/9.x/notionists/svg?seed=${seed}`;
+                        return (
+                          <button
+                            key={seed}
+                            type="button"
+                            className={`border-2 rounded-lg p-1 hover:border-blue-500 transition ${
+                              field.value === url
+                                ? "border-blue-500"
+                                : "border-transparent"
+                            }`}
+                            onClick={() => field.onChange(url)}
+                          >
+                            <Image
+                              src={url}
+                              alt={seed}
+                              className="w-full aspect-square object-cover rounded"
+                              width={40}
+                              height={40}
+                              unoptimized
+                            />
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 

@@ -1,24 +1,28 @@
-import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faPen, faBan } from "@fortawesome/free-solid-svg-icons";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
+import { UserActionsDialog } from "./UserActionsDialog";
+import { User } from "./types/User.types";
+import { Button } from "@/components/ui/button";
 
 export const UserActions = ({
-  onView,
-  onEdit,
+  user,
+  onUserUpdated,
+  onUserDeleted,
   onToggleStatus,
 }: {
-  onView: () => void;
-  onEdit: () => void;
+  user: User;
+  onUserUpdated: (user: User) => void;
+  onUserDeleted: (userId: string) => void;
   onToggleStatus: () => void;
 }) => {
   return (
     <div className="flex gap-2">
-      <Button variant="ghost" size="icon" onClick={onView}>
-        <FontAwesomeIcon icon={faEye} width={16} />
-      </Button>
-      <Button variant="ghost" size="icon" onClick={onEdit}>
-        <FontAwesomeIcon icon={faPen} width={16} />
-      </Button>
+      <UserActionsDialog
+        user={user}
+        onUserUpdated={onUserUpdated}
+        onUserDeleted={onUserDeleted}
+        onToggleStatus={onToggleStatus}
+      />
       <Button variant="ghost" size="icon" onClick={onToggleStatus}>
         <FontAwesomeIcon icon={faBan} width={16} />
       </Button>

@@ -13,6 +13,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { User } from "./types/User.types";
 
 export const UsersPage = () => {
   const {
@@ -32,14 +33,17 @@ export const UsersPage = () => {
 
   const handleAddUser = () => {
     console.log("Adicionar novo usuário");
+    setCurrentPage(1);
   };
 
-  const handleViewUser = (id: string) => {
-    console.log("Visualizar usuário", id);
+  const handleUserUpdated = (updatedUser: User) => {
+    console.log("Usuário atualizado:", updatedUser);
+    setCurrentPage(1);
   };
 
-  const handleEditUser = (id: string) => {
-    console.log("Editar usuário", id);
+  const handleUserDeleted = (userId: string) => {
+    console.log("Usuário excluído:", userId);
+    setCurrentPage(1);
   };
 
   const totalPages = Math.ceil(totalUsers / itemsPerPage);
@@ -68,8 +72,8 @@ export const UsersPage = () => {
       <Card>
         <UsersTable
           users={users}
-          onView={handleViewUser}
-          onEdit={handleEditUser}
+          onUserUpdated={handleUserUpdated}
+          onUserDeleted={handleUserDeleted}
           onToggleStatus={toggleUserStatus}
         />
 

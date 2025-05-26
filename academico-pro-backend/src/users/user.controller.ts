@@ -99,7 +99,9 @@ export class UsersController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a user' })
-  async remove(@Param('id') id: string): Promise<UserResponseDto> {
-    return this.usersService.remove(id);
+  @ApiResponse({ status: 204, description: 'User deleted successfully' })
+  @ApiResponse({ status: 404, description: 'User not found' })
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.usersService.remove(id);
   }
 }

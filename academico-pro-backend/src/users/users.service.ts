@@ -122,12 +122,28 @@ export class UsersService {
     return this.mapToDto(user);
   }
 
-  async remove(id: string): Promise<UserResponseDto> {
-    const user = await this.prisma.user.delete({
-      where: { id },
-    });
+  async remove(id: string): Promise<void> {
+    try {
+      // Primeiro verifica se o usuário existe
+      const user = await this.prisma.user.findUnique({
+        where: { id },
+      });
 
-    return this.mapToDto(user);
+      if (!user) {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+
+      // Se o usuário existe, procede com a exclusão
+      await this.prisma.user.delete({
+        where: { id },
+      });
+    } catch (error) {
+      // Trata erros específicos do Prisma
+      if (error.code === 'P2025') {
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      throw error;
+    }
   }
 
   private mapToDto(user: PrismaUserType): UserResponseDto {

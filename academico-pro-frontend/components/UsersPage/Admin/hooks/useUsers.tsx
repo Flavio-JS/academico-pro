@@ -59,8 +59,7 @@ export const useUsers = () => {
   const deleteUser = async (id: string) => {
     try {
       await api.delete(`/users/${id}`);
-      setUsers(users.filter((u) => u.id !== id));
-      setTotalUsers(totalUsers - 1);
+      setCurrentPage(1);
     } catch (err) {
       setError("Failed to delete user");
       console.error("Error deleting user:", err);
