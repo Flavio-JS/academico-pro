@@ -1,16 +1,21 @@
+import { UserRoles } from "@/lib/schemas/auth";
+
 export type User = {
-  id: number;
+  id: string; // Alterado de number para string (UUID)
   name: string;
   email: string;
   cpf: string;
-  type: string;
-  status: string;
-  avatarSeed: string;
+  role: UserRoles;
+  avatarUrl?: string | null;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type UserTableProps = {
   users: User[];
-  onView: (id: number) => void;
-  onEdit: (id: number) => void;
-  onToggleStatus: (id: number) => void;
+  onView: (id: string) => void;
+  onEdit: (id: string) => void;
+  onToggleStatus: (id: string) => void;
+  isLoading: boolean;
 };

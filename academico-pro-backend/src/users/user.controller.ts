@@ -5,6 +5,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
   UseGuards,
@@ -64,6 +65,16 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<UserResponseDto> {
     return this.usersService.update(id, updateUserDto);
+  }
+
+  @Patch(':id')
+  @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Partially update a user' })
+  async partialUpdate(
+    @Param('id') id: string,
+    @Body() partialUpdateUserDto: Partial<UpdateUserDto>,
+  ): Promise<UserResponseDto> {
+    return this.usersService.update(id, partialUpdateUserDto);
   }
 
   @Delete(':id')

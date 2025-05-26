@@ -2,6 +2,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { UserRoles } from "@/lib/schemas/auth";
+
+type FilterType = "all" | "active" | "inactive" | UserRoles;
 
 export const UserFilters = ({
   searchTerm,
@@ -11,8 +14,8 @@ export const UserFilters = ({
 }: {
   searchTerm: string;
   onSearchChange: (term: string) => void;
-  filter: string;
-  onFilterChange: (filter: string) => void;
+  filter: FilterType;
+  onFilterChange: (filter: FilterType) => void;
 }) => {
   return (
     <div className="flex flex-col gap-4">
@@ -38,20 +41,20 @@ export const UserFilters = ({
           Todos
         </Button>
         <Button
-          variant={filter === "aluno" ? "default" : "outline"}
-          onClick={() => onFilterChange("aluno")}
+          variant={filter === "STUDENT" ? "default" : "outline"}
+          onClick={() => onFilterChange(UserRoles.STUDENT)}
         >
           Alunos
         </Button>
         <Button
-          variant={filter === "professor" ? "default" : "outline"}
-          onClick={() => onFilterChange("professor")}
+          variant={filter === "PROFESSOR" ? "default" : "outline"}
+          onClick={() => onFilterChange(UserRoles.PROFESSOR)}
         >
           Professores
         </Button>
         <Button
-          variant={filter === "administrador" ? "default" : "outline"}
-          onClick={() => onFilterChange("administrador")}
+          variant={filter === "ADMIN" ? "default" : "outline"}
+          onClick={() => onFilterChange(UserRoles.ADMIN)}
         >
           Administradores
         </Button>

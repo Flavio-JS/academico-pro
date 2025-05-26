@@ -18,10 +18,23 @@ export const UsersTable = ({
   onToggleStatus,
 }: {
   users: User[];
-  onView: (id: number) => void;
-  onEdit: (id: number) => void;
-  onToggleStatus: (id: number) => void;
+  onView: (id: string) => void;
+  onEdit: (id: string) => void;
+  onToggleStatus: (id: string) => void;
 }) => {
+  const getRoleName = (role: User["role"]) => {
+    switch (role) {
+      case "ADMIN":
+        return "Administrador(a)";
+      case "PROFESSOR":
+        return "Professor(a)";
+      case "STUDENT":
+        return "Aluno(a)";
+      default:
+        return role;
+    }
+  };
+
   return (
     <Table>
       <TableHeader className="bg-neutral-50">
@@ -40,7 +53,10 @@ export const UsersTable = ({
           <TableRow key={user.id} className="hover:bg-neutral-50">
             <TableCell className="px-6 py-4">
               <Image
-                src={`https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=${user.avatarSeed}`}
+                src={
+                  user.avatarUrl ||
+                  `https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123`
+                }
                 width={32}
                 height={32}
                 className="w-8 h-8 rounded-full"
@@ -51,9 +67,11 @@ export const UsersTable = ({
             <TableCell className="px-6 py-4">{user.name}</TableCell>
             <TableCell className="px-6 py-4">{user.email}</TableCell>
             <TableCell className="px-6 py-4">{user.cpf}</TableCell>
-            <TableCell className="px-6 py-4">{user.type}</TableCell>
             <TableCell className="px-6 py-4">
-              <UserStatusBadge status={user.status} />
+              {getRoleName(user.role)}
+            </TableCell>
+            <TableCell className="px-6 py-4">
+              <UserStatusBadge status={user.isActive ? "Ativo" : "Inativo"} />
             </TableCell>
             <TableCell className="px-6 py-4">
               <UserActions

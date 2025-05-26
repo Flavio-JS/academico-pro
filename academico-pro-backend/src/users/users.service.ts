@@ -58,7 +58,10 @@ export class UsersService {
     return this.mapToDto(user);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<UserResponseDto> {
+  async update(
+    id: string,
+    updateUserDto: UpdateUserDto | Partial<UpdateUserDto>,
+  ): Promise<UserResponseDto> {
     const user = await this.prisma.user.update({
       where: { id },
       data: updateUserDto,
@@ -84,6 +87,7 @@ export class UsersService {
       cpf: user.cpf,
       role: user.role,
       isActive: user.isActive,
+      avatarUrl: user.avatarUrl,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };

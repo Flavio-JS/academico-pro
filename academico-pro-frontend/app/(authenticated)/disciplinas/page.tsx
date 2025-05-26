@@ -17,8 +17,6 @@ export default function Disciplines() {
     return <div>Usuário não autenticado</div>;
   }
 
-  console.log({ user });
-
   return (
     <>
       {/* Aluno Disciplines */}

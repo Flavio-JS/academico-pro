@@ -1,10 +1,33 @@
-import { useState } from "react";
-import { mockUsers } from "../mocks/users.mocks";
+import { useState, useEffect } from "react";
+import { User } from "../types/User.types";
+import { UserRoles } from "@/lib/schemas/auth";
+import api from "@/lib/api/axios";
 
 export const useUsers = () => {
-  const [users, setUsers] = useState(mockUsers);
+  const [users, setUsers] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState<
+    "all" | "active" | "inactive" | UserRoles
+  >("all");
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setIsLoading(true);
+        const response = await api.get("/users");
+        setUsers(response.data);
+      } catch (err) {
+        setError("Failed to fetch users");
+        console.error("Error fetching users:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -14,29 +37,48 @@ export const useUsers = () => {
 
     const matchesFilter =
       filter === "all" ||
-      (filter === "active" && user.status === "Ativo") ||
-      (filter === "inactive" && user.status === "Inativo") ||
-      user.type.toLowerCase().includes(filter.toLowerCase());
+      (filter === "active" && user.isActive) ||
+      (filter === "inactive" && !user.isActive) ||
+      filter === user.role;
 
     return matchesSearch && matchesFilter;
   });
 
-  const toggleUserStatus = (id: number) => {
-    setUsers(
-      users.map((user) =>
-        user.id === id
-          ? { ...user, status: user.status === "Ativo" ? "Inativo" : "Ativo" }
-          : user
-      )
-    );
+  const toggleUserStatus = async (id: string) => {
+    try {
+      const user = users.find((u) => u.id === id);
+      if (!user) return;
+
+      const updatedUser = await api.patch(`/users/${id}`, {
+        isActive: !user.isActive,
+      });
+
+      setUsers(users.map((u) => (u.id === id ? updatedUser.data : u)));
+    } catch (err) {
+      setError("Failed to update user status");
+      console.error("Error updating user status:", err);
+    }
+  };
+
+  const deleteUser = async (id: string) => {
+    try {
+      await api.delete(`/users/${id}`);
+      setUsers(users.filter((u) => u.id !== id));
+    } catch (err) {
+      setError("Failed to delete user");
+      console.error("Error deleting user:", err);
+    }
   };
 
   return {
     users: filteredUsers,
+    isLoading,
+    error,
     searchTerm,
     setSearchTerm,
     filter,
     setFilter,
     toggleUserStatus,
+    deleteUser,
   };
 };

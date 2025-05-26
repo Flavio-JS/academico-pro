@@ -10,11 +10,14 @@ import { UsersTable } from "./UsersTable";
 export const UsersPage = () => {
   const {
     users,
+    isLoading,
+    error,
     searchTerm,
     setSearchTerm,
     filter,
     setFilter,
     toggleUserStatus,
+    // deleteUser,
   } = useUsers();
 
   const handleAddUser = () => {
@@ -22,15 +25,19 @@ export const UsersPage = () => {
     console.log("Adicionar novo usuário");
   };
 
-  const handleViewUser = (id: number) => {
+  const handleViewUser = (id: string) => {
     // Lógica para visualizar usuário
     console.log("Visualizar usuário", id);
   };
 
-  const handleEditUser = (id: number) => {
+  const handleEditUser = (id: string) => {
     // Lógica para editar usuário
     console.log("Editar usuário", id);
   };
+
+  if (isLoading) return <div>Carregando...</div>;
+
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div className="flex-1 bg-neutral-50 overflow-auto">

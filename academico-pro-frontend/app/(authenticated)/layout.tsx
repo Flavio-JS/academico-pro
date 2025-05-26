@@ -13,6 +13,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function AuthenticatedLayout({
   children,
@@ -81,6 +82,7 @@ export default function AuthenticatedLayout({
           <ScrollArea className="h-[calc(100vh-72px)] p-6">
             {children}
           </ScrollArea>
+          <Toaster />
         </main>
       </div>
     </>
