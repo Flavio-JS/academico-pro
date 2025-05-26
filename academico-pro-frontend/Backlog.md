@@ -33,7 +33,7 @@ Este backlog descreve as funcionalidades pendentes a serem implementadas no sist
 - [x] Formulário de criação de disciplina (modal)
 - [x] Campos: nome, código, carga horária, professor, pré-requisitos, ementa, status
 
-### 📄 Página: Gestão de Matrículas
+### 📄 Página: Gestão de Matrículas ( ADM )
 
 - [x] Listagem de matrículas com filtros
   - Filtro por semestre, curso e status
