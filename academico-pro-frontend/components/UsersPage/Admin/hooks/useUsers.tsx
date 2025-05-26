@@ -11,13 +11,24 @@ export const useUsers = () => {
   const [filter, setFilter] = useState<
     "all" | "active" | "inactive" | UserRoles
   >("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         setIsLoading(true);
-        const response = await api.get("/users");
-        setUsers(response.data);
+        const response = await api.get("/users", {
+          params: {
+            search: searchTerm,
+            filter: filter === "all" ? undefined : filter,
+            page: currentPage,
+            limit: itemsPerPage,
+          },
+        });
+        setUsers(response.data.data);
+        setTotalUsers(response.data.total);
       } catch (err) {
         setError("Failed to fetch users");
         console.error("Error fetching users:", err);
@@ -27,22 +38,7 @@ export const useUsers = () => {
     };
 
     fetchUsers();
-  }, []);
-
-  const filteredUsers = users.filter((user) => {
-    const matchesSearch =
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.cpf.includes(searchTerm);
-
-    const matchesFilter =
-      filter === "all" ||
-      (filter === "active" && user.isActive) ||
-      (filter === "inactive" && !user.isActive) ||
-      filter === user.role;
-
-    return matchesSearch && matchesFilter;
-  });
+  }, [searchTerm, filter, currentPage, itemsPerPage]);
 
   const toggleUserStatus = async (id: string) => {
     try {
@@ -64,6 +60,7 @@ export const useUsers = () => {
     try {
       await api.delete(`/users/${id}`);
       setUsers(users.filter((u) => u.id !== id));
+      setTotalUsers(totalUsers - 1);
     } catch (err) {
       setError("Failed to delete user");
       console.error("Error deleting user:", err);
@@ -71,7 +68,7 @@ export const useUsers = () => {
   };
 
   return {
-    users: filteredUsers,
+    users,
     isLoading,
     error,
     searchTerm,
@@ -80,5 +77,9 @@ export const useUsers = () => {
     setFilter,
     toggleUserStatus,
     deleteUser,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+    totalUsers,
   };
 };

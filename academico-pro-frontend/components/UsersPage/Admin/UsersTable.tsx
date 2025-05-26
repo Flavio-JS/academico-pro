@@ -10,6 +10,7 @@ import {
 import { UserStatusBadge } from "./UserStatusBadge";
 import { UserActions } from "./UserActions";
 import { User } from "./types/User.types";
+import { formatCPF } from "@/lib/utils/formatCPF";
 
 export const UsersTable = ({
   users,
@@ -49,39 +50,40 @@ export const UsersTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {users.map((user) => (
-          <TableRow key={user.id} className="hover:bg-neutral-50">
-            <TableCell className="px-6 py-4">
-              <Image
-                src={
-                  user.avatarUrl ||
-                  `https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123`
-                }
-                width={32}
-                height={32}
-                className="w-8 h-8 rounded-full"
-                alt={`Avatar de ${user.name}`}
-                unoptimized
-              />
-            </TableCell>
-            <TableCell className="px-6 py-4">{user.name}</TableCell>
-            <TableCell className="px-6 py-4">{user.email}</TableCell>
-            <TableCell className="px-6 py-4">{user.cpf}</TableCell>
-            <TableCell className="px-6 py-4">
-              {getRoleName(user.role)}
-            </TableCell>
-            <TableCell className="px-6 py-4">
-              <UserStatusBadge status={user.isActive ? "Ativo" : "Inativo"} />
-            </TableCell>
-            <TableCell className="px-6 py-4">
-              <UserActions
-                onView={() => onView(user.id)}
-                onEdit={() => onEdit(user.id)}
-                onToggleStatus={() => onToggleStatus(user.id)}
-              />
-            </TableCell>
-          </TableRow>
-        ))}
+        {users &&
+          users.map((user) => (
+            <TableRow key={user.id} className="hover:bg-neutral-50">
+              <TableCell className="px-6 py-4">
+                <Image
+                  src={
+                    user.avatarUrl ||
+                    `https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=123`
+                  }
+                  width={32}
+                  height={32}
+                  className="w-8 h-8 rounded-full"
+                  alt={`Avatar de ${user.name}`}
+                  unoptimized
+                />
+              </TableCell>
+              <TableCell className="px-6 py-4">{user.name}</TableCell>
+              <TableCell className="px-6 py-4">{user.email}</TableCell>
+              <TableCell className="px-6 py-4">{formatCPF(user.cpf)}</TableCell>
+              <TableCell className="px-6 py-4">
+                {getRoleName(user.role)}
+              </TableCell>
+              <TableCell className="px-6 py-4">
+                <UserStatusBadge status={user.isActive ? "Ativo" : "Inativo"} />
+              </TableCell>
+              <TableCell className="px-6 py-4">
+                <UserActions
+                  onView={() => onView(user.id)}
+                  onEdit={() => onEdit(user.id)}
+                  onToggleStatus={() => onToggleStatus(user.id)}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
       </TableBody>
     </Table>
   );

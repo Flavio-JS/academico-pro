@@ -1,8 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Prisma, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateUserDto } from './dto/create-user.dto';
+import { PaginatedUsersResponseDto } from './dto/paginated-users-response.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { PrismaUserType } from './types/prisma-user.type';
@@ -32,6 +34,56 @@ export class UsersService {
   async findAll(): Promise<UserResponseDto[]> {
     const users = await this.prisma.user.findMany();
     return users.map((user) => this.mapToDto(user));
+  }
+
+  async findAllPaginated({
+    page,
+    limit,
+    search,
+    filter,
+  }: {
+    page: number;
+    limit: number;
+    search?: string;
+    filter?: 'all' | 'active' | 'inactive' | Role;
+  }): Promise<PaginatedUsersResponseDto> {
+    const where: Prisma.UserWhereInput = {};
+
+    if (search) {
+      where.OR = [
+        { name: { contains: search, mode: 'insensitive' } },
+        { email: { contains: search, mode: 'insensitive' } },
+        { cpf: { contains: search } },
+      ];
+    }
+
+    if (filter && filter !== 'all') {
+      if (filter === 'active') {
+        where.isActive = true;
+      } else if (filter === 'inactive') {
+        where.isActive = false;
+      } else {
+        where.role = filter;
+      }
+    }
+
+    const [users, total] = await Promise.all([
+      this.prisma.user.findMany({
+        where,
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.user.count({ where }),
+    ]);
+
+    return {
+      data: users.map((user) => this.mapToDto(user)),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   async findOne(id: string): Promise<UserResponseDto> {

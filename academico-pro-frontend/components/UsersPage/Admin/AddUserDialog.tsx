@@ -34,6 +34,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { User } from "./types/User.types";
 import { UserRoles } from "@/lib/schemas/auth";
 import Image from "next/image";
+import { formatCPF } from "@/lib/utils/formatCPF";
 
 interface AddUserDialogProps {
   onUserAdded: (user: User) => void;
@@ -150,7 +151,16 @@ export const AddUserDialog = ({ onUserAdded }: AddUserDialogProps) => {
                   <FormItem>
                     <FormLabel>CPF</FormLabel>
                     <FormControl>
-                      <Input placeholder="000.000.000-00" {...field} />
+                      <Input
+                        placeholder="000.000.000-00"
+                        value={formatCPF(field.value)}
+                        onChange={(e) => {
+                          const onlyNumbers = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 11);
+                          field.onChange(onlyNumbers);
+                        }}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

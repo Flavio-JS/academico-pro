@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { UserRoles } from "@/lib/schemas/auth";
+import { useState, useEffect } from "react";
 
 type FilterType = "all" | "active" | "inactive" | UserRoles;
 
@@ -17,20 +18,44 @@ export const UserFilters = ({
   filter: FilterType;
   onFilterChange: (filter: FilterType) => void;
 }) => {
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  // Atualiza o termo local quando o termo externo muda (ex: ao limpar filtros)
+  useEffect(() => {
+    setLocalSearchTerm(searchTerm);
+  }, [searchTerm]);
+
+  const handleSearch = () => {
+    onSearchChange(localSearchTerm);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative">
-        <FontAwesomeIcon
-          icon={faSearch}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
-        />
-        <Input
-          type="text"
-          placeholder="Buscar por nome, email ou CPF"
-          className="pl-10 w-full"
-          value={searchTerm}
-          onChange={(e) => onSearchChange(e.target.value)}
-        />
+      <div className="flex gap-2">
+        <div className="relative flex-1">
+          <FontAwesomeIcon
+            icon={faSearch}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400"
+          />
+          <Input
+            type="text"
+            placeholder="Buscar por nome, email ou CPF"
+            className="pl-10 w-full"
+            value={localSearchTerm}
+            onChange={(e) => setLocalSearchTerm(e.target.value)}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
+        <Button onClick={handleSearch}>
+          <FontAwesomeIcon icon={faSearch} className="mr-2" />
+          Pesquisar
+        </Button>
       </div>
 
       <div className="flex flex-wrap gap-2">
