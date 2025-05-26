@@ -1,47 +1,62 @@
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faLock, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+interface PasswordFieldProps {
+  label: string;
+  id: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
+  onBlur: () => void;
+  error?: string;
+}
 
 export const PasswordField = ({
-  showPassword,
+  label,
+  id,
+  name,
+  placeholder,
   value,
   onChange,
-  toggleVisibility,
-}: {
-  showPassword: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  toggleVisibility: () => void;
-}) => {
+  onBlur,
+  error,
+}: PasswordFieldProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <div className="space-y-2">
-      <label htmlFor="password" className="block text-sm text-neutral-700">
-        Senha
-      </label>
+      <Label htmlFor={id}>{label}</Label>
       <div className="relative">
         <div className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500">
           <FontAwesomeIcon icon={faLock} width={20} />
         </div>
-        <input
+        <Input
           type={showPassword ? "text" : "password"}
-          id="password"
-          name="password"
-          placeholder="Digite sua senha"
+          id={id}
+          name={name}
+          placeholder={placeholder}
           value={value}
-          onChange={onChange}
-          className="pl-10 w-full p-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-neutral-500 text-neutral-700 focus:border-neutral-500"
+          onChange={(e) => onChange(e.target.value)}
+          onBlur={onBlur}
+          className={`pl-10 w-full ${error ? "border-red-300" : ""}`}
         />
         <button
           type="button"
           className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500"
-          onClick={toggleVisibility}
+          onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? (
-            <FontAwesomeIcon icon={faEyeSlash} width={20} />
-          ) : (
-            <FontAwesomeIcon icon={faEye} width={20} />
-          )}
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            width={20}
+          />
         </button>
       </div>
+      {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );
 };

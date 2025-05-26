@@ -1,10 +1,19 @@
-export const SubmitButton = () => {
+import { Button } from "@/components/ui/button";
+
+interface SubmitButtonProps {
+  children: React.ReactNode;
+  disabled?: boolean;
+}
+
+export const SubmitButton = ({ children, disabled }: SubmitButtonProps) => {
   return (
-    <button
+    <Button
       type="submit"
-      className="w-full bg-neutral-900 text-white py-3 px-4 rounded-lg hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-500"
+      disabled={disabled}
+      className="w-full"
+      variant="default"
     >
-      Entrar
-    </button>
+      {children}
+    </Button>
   );
 };
