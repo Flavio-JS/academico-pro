@@ -55,7 +55,7 @@ export const UsersPage = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="flex-1 bg-neutral-50 overflow-auto">
+    <div className="flex flex-col h-full">
       <UserHeader onAddUser={handleAddUser} />
 
       <Card className="mb-6">
@@ -69,13 +69,19 @@ export const UsersPage = () => {
         </CardContent>
       </Card>
 
-      <Card>
-        <UsersTable
-          users={users}
-          onUserUpdated={handleUserUpdated}
-          onUserDeleted={handleUserDeleted}
-          onToggleStatus={toggleUserStatus}
-        />
+      <Card className="flex-1 flex flex-col min-h-0">
+        <div className="flex-1 min-h-0 overflow-auto">
+          <CardContent className="p-0 h-full">
+            <div className="min-w-[900px] h-full">
+              <UsersTable
+                users={users}
+                onUserUpdated={handleUserUpdated}
+                onUserDeleted={handleUserDeleted}
+                onToggleStatus={toggleUserStatus}
+              />
+            </div>
+          </CardContent>
+        </div>
 
         <CardContent className="flex items-center justify-between px-6 py-4 border-t">
           <span className="text-sm text-neutral-600">

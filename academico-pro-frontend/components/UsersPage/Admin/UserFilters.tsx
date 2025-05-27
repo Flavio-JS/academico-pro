@@ -52,7 +52,7 @@ export const UserFilters = ({
             onKeyDown={handleKeyDown}
           />
         </div>
-        <Button onClick={handleSearch}>
+        <Button onClick={handleSearch} variant="outline">
           <FontAwesomeIcon icon={faSearch} className="mr-2" />
           Pesquisar
         </Button>

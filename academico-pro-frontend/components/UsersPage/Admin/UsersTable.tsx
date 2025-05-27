@@ -11,6 +11,7 @@ import { UserStatusBadge } from "./UserStatusBadge";
 import { UserActions } from "./UserActions";
 import { User } from "./types/User.types";
 import { formatCPF } from "@/lib/utils/formatCPF";
+import { UserRoles } from "@/lib/schemas/auth";
 
 export const UsersTable = ({
   users,
@@ -25,11 +26,11 @@ export const UsersTable = ({
 }) => {
   const getRoleName = (role: User["role"]) => {
     switch (role) {
-      case "ADMIN":
+      case UserRoles.ADMIN:
         return "Administrador(a)";
-      case "PROFESSOR":
+      case UserRoles.PROFESSOR:
         return "Professor(a)";
-      case "STUDENT":
+      case UserRoles.STUDENT:
         return "Aluno(a)";
       default:
         return role;
@@ -37,23 +38,37 @@ export const UsersTable = ({
   };
 
   return (
-    <Table>
+    <Table className="w-full">
       <TableHeader className="bg-neutral-50">
         <TableRow>
-          <TableHead className="px-6 py-3 text-left">Foto</TableHead>
-          <TableHead className="px-6 py-3 text-left">Nome</TableHead>
-          <TableHead className="px-6 py-3 text-left">E-mail</TableHead>
-          <TableHead className="px-6 py-3 text-left">CPF</TableHead>
-          <TableHead className="px-6 py-3 text-left">Tipo</TableHead>
-          <TableHead className="px-6 py-3 text-left">Status</TableHead>
-          <TableHead className="px-6 py-3 text-left">Ações</TableHead>
+          <TableHead className="px-3 py-3 text-left hidden sm:table-cell">
+            Foto
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left min-w-[150px]">
+            Nome
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left hidden md:table-cell min-w-[200px]">
+            E-mail
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left hidden lg:table-cell">
+            CPF
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left min-w-[120px]">
+            Tipo
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left min-w-[100px]">
+            Status
+          </TableHead>
+          <TableHead className="px-3 py-3 text-left min-w-[150px]">
+            Ações
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {users &&
           users.map((user) => (
             <TableRow key={user.id} className="hover:bg-neutral-50">
-              <TableCell className="px-6 py-4">
+              <TableCell className="px-3 py-4 hidden sm:table-cell">
                 <Image
                   src={
                     user.avatarUrl ||
@@ -66,16 +81,24 @@ export const UsersTable = ({
                   unoptimized
                 />
               </TableCell>
-              <TableCell className="px-6 py-4">{user.name}</TableCell>
-              <TableCell className="px-6 py-4">{user.email}</TableCell>
-              <TableCell className="px-6 py-4">{formatCPF(user.cpf)}</TableCell>
-              <TableCell className="px-6 py-4">
-                {getRoleName(user.role)}
+              <TableCell className="px-3 py-4 font-medium">
+                {user.name}
               </TableCell>
-              <TableCell className="px-6 py-4">
+              <TableCell className="px-3 py-4 hidden md:table-cell">
+                {user.email}
+              </TableCell>
+              <TableCell className="px-3 py-4 hidden lg:table-cell">
+                {formatCPF(user.cpf)}
+              </TableCell>
+              <TableCell className="px-3 py-4">
+                <span className="whitespace-nowrap">
+                  {getRoleName(user.role)}
+                </span>
+              </TableCell>
+              <TableCell className="px-3 py-4">
                 <UserStatusBadge status={user.isActive ? "Ativo" : "Inativo"} />
               </TableCell>
-              <TableCell className="px-6 py-4">
+              <TableCell className="px-3 py-4">
                 <UserActions
                   user={user}
                   onUserUpdated={onUserUpdated}
