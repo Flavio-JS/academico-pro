@@ -5,12 +5,13 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CoursesModule } from './courses/courses.module';
 import { DisciplinesModule } from './disciplines/disciplines.module';
+import { EmailModule } from './email/email.module';
 import { CorsMiddleware } from './middlewares/cors.middleware';
 import { PrismaModule } from './prisma/prisma.module';
-import { UsersModule } from './users/user.modules';
+import { UsersModule } from './users/user.module';
 
 @Module({
-  imports: [PrismaModule, DisciplinesModule, CoursesModule, UsersModule, AuthModule],
+  imports: [PrismaModule, DisciplinesModule, CoursesModule, UsersModule, AuthModule, EmailModule],
   controllers: [AppController],
   providers: [AppService],
 })

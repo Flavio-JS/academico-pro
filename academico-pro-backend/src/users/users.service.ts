@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma, Role } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { EmailService } from 'src/email/email.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 import { CreateUserDto } from './dto/create-user.dto';
@@ -11,7 +12,10 @@ import { PrismaUserType } from './types/prisma-user.type';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly emailService: EmailService,
+  ) {}
 
   private hashPassword(password: string): Promise<string> {
     const saltRounds = 10;
@@ -28,7 +32,32 @@ export class UsersService {
       },
     });
 
+    await this.sendWelcomeEmail(user.email, createUserDto.password);
+
     return this.mapToDto(user);
+  }
+
+  private async sendWelcomeEmail(email: string, temporaryPassword: string): Promise<void> {
+    const loginUrl = `${process.env.FRONTEND_URL}`;
+    const subject = 'Bem-vindo ao Academico Pro - Sua conta foi criada';
+    const html = `
+      <h1>Bem-vindo ao Academico Pro!</h1>
+      <p>Sua conta foi criada com sucesso.</p>
+      <p>Para acessar o sistema, utilize as seguintes credenciais:</p>
+      <ul>
+        <li><strong>Email:</strong> ${email}</li>
+        <li><strong>Senha temporária:</strong> ${temporaryPassword}</li>
+      </ul>
+      <p>Por segurança, recomendamos que você altere sua senha temporária após o primeiro login.</p>
+      <p><a href="${loginUrl}">Clique aqui para acessar o sistema</a></p>
+      <p>Atenciosamente,<br>Equipe Academico Pro</p>
+    `;
+
+    await this.emailService.sendEmail({
+      to: email,
+      subject,
+      html,
+    });
   }
 
   async findAll(): Promise<UserResponseDto[]> {
