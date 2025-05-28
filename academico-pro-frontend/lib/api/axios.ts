@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3001",
+  baseURL: process.env.NEXT_PUBLIC_ACADEMICO_PRO_BACKEND_URL,
   headers: {
     "Content-Type": "application/json",
   },

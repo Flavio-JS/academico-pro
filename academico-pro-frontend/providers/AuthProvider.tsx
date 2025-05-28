@@ -44,13 +44,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     email: string;
     password: string;
   }) => {
-    const response = await fetch("http://localhost:3001/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_ACADEMICO_PRO_BACKEND_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     if (!response.ok) {
       throw new Error("Credenciais inválidas");
